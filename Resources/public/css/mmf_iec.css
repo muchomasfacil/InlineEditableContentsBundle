@@ -1,0 +1,13 @@
+.mmf-iec-editable { border-top : 1px dashed black; border-bottom : 1px dashed black;  min-width: 50px;  min-height: 20px; cursor: crosshair }
+.mmf-iec-editable-hover {border-top : 1px solid black; border-bottom : 1px solid black; background-color: #eee; }
+
+.mmf-iec-button-move
+, .mmf-iec-button-delete
+, .mmf-iec-button-edit
+, .mmf-iec-button-add
+, .mmf-iec-button-add-on-top
+, .mmf-iec-button-delete-all {font-size: .6em}
+
+.mmf-iec-ul-sortable {list-style: none; margin: 0px; padding: 0px}
+.mmf-iec-li-sortable {padding: .2em; margin: 5px 0px}
+

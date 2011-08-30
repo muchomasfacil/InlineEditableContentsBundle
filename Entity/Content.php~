@@ -1,0 +1,34 @@
+<?php
+
+namespace MuchoMasFacil\InlineEditableContentsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * MuchoMasFacil\InlineEditableContentsBundle\Entity\Content
+ */
+class Content
+{
+//------------------------------------------------------------------------------
+//Custom code
+//------------------------------------------------------------------------------
+    public function getParsedAdminRoles()
+    {
+      return Yaml::parse($this->getYmlAdminRoles());
+    }
+
+    public function getParsedEditorRoles()
+    {
+      return Yaml::parse($this->getYmlEditorRoles());
+    }
+
+    public function getParsedParams()
+    {
+      return Yaml::parse($this->getYmlParams());
+    }
+//------------------------------------------------------------------------------
+
+
+}

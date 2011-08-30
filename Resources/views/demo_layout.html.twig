@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>MuchoMasFacilInlineEditableWidgetsBundle Demo</title>
+{% block stylesheets %}
+        <link type="text/css" href="{{ asset('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css') }}" rel="stylesheet" />
+        <link type="text/css" href="{{ asset('bundles/muchomasfacilinlineeditablecontents/css/mmf_iec.css') }}" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+        <script type="text/javascript" src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js') }}"></script>
+        <!--<script type="text/javascript" src="{{ asset('js/jquery-ui-fix-4727.js') }}"></script>-->
+        <script type="text/javascript" src="{{ asset('js/malsup/jquery.blockUI.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/malsup/jquery.form.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/malsup/jquery.taconite.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/ckeditor/ckeditor.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/ckeditor/adapters/jquery.js') }}"></script>
+{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
+

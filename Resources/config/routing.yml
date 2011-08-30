@@ -1,0 +1,32 @@
+mmf_iec_demo:
+    pattern:  /mmf_iec_demo
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Demo:index }
+
+mmf_iec_render:
+    pattern:  /mmf_iec_render/{handler}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:render }
+
+mmf_iec_collection:
+    pattern:  /mmf_iec_collection_list/{handler}/{content_container_id}/{reload_container}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:collection, reload_container: false }
+
+mmf_iec_collection_sort:
+    pattern:  /mmf_iec_collection_sort/{handler}/{content_container_id}/{reload_container}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:sortCollection, reload_container: false }
+
+mmf_iec_collection_add:
+    pattern:  /mmf_iec_add_single_content/{handler}/{content_container_id}/{content_order}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:addSingleContent}
+
+mmf_iec_editor_form:
+    pattern:  /mmf_iec_editor_form/{handler}/{content_container_id}/{content_order}/{action_if_success}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:editorForm, content_order: 0, action_if_success: false }
+
+mmf_iec_admin_form:
+    pattern:  /mmf_iec_admin_form/{handler}/{content_container_id}/{action_if_success}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:adminForm, action_if_success: false }
+
+mmf_iec_delete:
+    pattern:  /mmf_iec_delete_single_content/{handler}/{content_container_id}/{content_order}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:deleteContent}
+

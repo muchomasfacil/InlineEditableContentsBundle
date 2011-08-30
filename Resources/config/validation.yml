@@ -1,0 +1,10 @@
+MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\PlainText:
+    properties:
+        content:
+            - NotBlank: ~
+
+MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\RichText:
+    properties:
+        content:
+            - NotBlank: ~
+

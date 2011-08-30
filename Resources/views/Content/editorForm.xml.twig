@@ -1,0 +1,32 @@
+<taconite>
+{% set js_dialog_var = 'iec_' ~ content.handler | replace({'-': '_'}) ~ '_dialog' %}
+
+{% include bundle_name ~ ':' ~ controller_name ~ ':Includes/reload_container.html.twig' %}
+
+{% if action_if_success == 'close' %}
+
+    <eval><![CDATA[
+${{ js_dialog_var }}.dialog('close');
+    ]]>
+    </eval>
+
+{% elseif action_if_success == 'list' %}
+
+    <eval><![CDATA[
+customJqueryAjaxLoad('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}');
+    ]]>
+    </eval>
+
+{% else %}
+
+{% include bundle_name ~ ':' ~ controller_name ~ ':Includes/open_ui_dialog.html.twig' %}
+
+{% if content.getParsedParams().form_template is defined%}
+    {% include content.getParsedParams().form_template %}
+{% else %}
+    {% include bundle_name ~ ':' ~ controller_name ~ ':Includes/form_template.html.twig' %}
+{% endif %}
+
+{% endif %}
+</taconite>
+

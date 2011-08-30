@@ -1,0 +1,31 @@
+    <eval><![CDATA[
+
+if( typeof( ${{ js_dialog_var }} ) == 'undefined' )
+{
+    var ${{ js_dialog_var }} = $('<div id="{{ js_dialog_var }}"></div>')
+        .dialog({
+            autoOpen: false,
+            title: '{{ 'Editing content with handler'  | trans({}, 'iec') }} "{{ content.handler }}"',
+            width: Math.min(800,$(window).width()*90/100),
+            height: Math.min(600,$(window).height()*90/100),
+            //modal: true,
+            close: function() {
+                ${{ js_dialog_var }}.html('');
+                /*$('#{{ content_container_id }}').unblock();*/
+            }
+        });
+}
+
+if (!${{ js_dialog_var }}.dialog('isOpen'))
+{
+    ${{ js_dialog_var }}.dialog('open');
+    /*$('#{{ content_container_id }}').block({
+            message: '<p>{{ 'Under edition' | trans({}, 'iec') }}...</p>',
+            css: { backgroundColor: '#eee', font: '10px bold Arial, Helvetica, sans-serif' }
+        });*/
+}
+
+
+    ]]>
+    </eval>
+
