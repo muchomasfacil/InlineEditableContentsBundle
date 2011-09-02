@@ -1,16 +1,22 @@
 TODO for the  InlineEditableWidgetsBundle
 =========================================
-- subirlo a github
 - Securing: ajax actions utilizar los roles de admin y de editor...
+- formulario de administrador
 - completar ckeditor con ckfinder o el file manager...
 - añadir opción de imágenes/ficheros al ckeditor
-- formulario de administrador
+
+- CONFIGURACIONES DEL BUNDLE:
+    - algo de css o js?
+    - default values para content entity con cada tipo de content
+    - configuraciones para ckeditor o file manager
+
+- input de tipo file en formularios (las llamadas son ajax...)
 - custom yml validator... para los campos yml
 - custom form type ckeditor... ajax file upload... u otros...
 - form styling including errors
 - ver en content demo qué hacer si no existe en render o en collection el handler en base de datos... find en vez de findifnotexist
-- Testar que los handlers y los container id sólo contienen a-z, 0-9, y - y _
-- Validación para testar que están los js adecuados o un helper para añadirlos...
+- Testar validator que los handlers y los container id sólo contienen a-z, 0-9, y - y _
+- Validación para testar que están los js adecuados (tanto para el admin como para los renders) o un helper para añadirlos...
 - crear combinaciones de opciones de ckeditor
 - try catch del rendering de si existe el form_class y o el entity_class
 - utilizar jcrop a la hora de subir la imagen

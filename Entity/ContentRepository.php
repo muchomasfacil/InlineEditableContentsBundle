@@ -35,7 +35,7 @@ class ContentRepository extends EntityRepository
                 $content->setYmlEditorRoles($default['yml_editor_roles']);
             }
             else {
-                $content->setYmlEditorRoles('[ROLE_EDITOR]');
+                $content->setYmlEditorRoles('[ROLE_USER]');
             }
 
             //set admin roles

@@ -8,6 +8,6 @@
 , .mmf-iec-button-add-on-top
 , .mmf-iec-button-delete-all {font-size: .6em}
 
-.mmf-iec-ul-sortable {list-style: none; margin: 0px; padding: 0px}
+.mmf-iec-ul-sortable {list-style: none; margin: 0px; padding: 0px;}
 .mmf-iec-li-sortable {padding: .2em; margin: 5px 0px}
 

@@ -9,15 +9,15 @@
 
 {% include bundle_name ~ ':' ~ controller_name ~ ':Includes/flash.html.twig' %}
 
-    <a title="{{ 'Add entry here on top' | trans({}, 'iec') }}" class="mmf-iec-button-add-on-top" href="javascript:void(0)" onclick="customJqueryAjaxLoad('{{ path( 'mmf_iec_collection_add', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': 0 }) }}')">{{ 'Add entry here on top' | trans({}, 'iec') }}</a>
-    <a title="{{ 'Delete all entries' | trans({}, 'iec') }}" class="mmf-iec-button-delete-all" href="javascript:void(0)" onclick="if (confirm('{{ 'Are you sure?' | trans({}, 'iec') }}')) customJqueryAjaxLoad('{{ path( 'mmf_iec_delete', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': 'all' }) }}')">{{ 'Delete all entries' | trans({}, 'iec') }}</a>
+    <a title="{{ 'Add entry here on top' | trans({}, 'iec') }}" class="mmf-iec-button-add-on-top" href="javascript:void(0)" onclick="customJqueryAjaxLoad('{{ path( 'mmf_iec_collection_add', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': 0 }) }}', undefined, '#{{ js_dialog_var }}')">{{ 'Add entry here on top' | trans({}, 'iec') }}</a>
+    <a title="{{ 'Delete all entries' | trans({}, 'iec') }}" class="mmf-iec-button-delete-all" href="javascript:void(0)" onclick="if (confirm('{{ 'Are you sure?' | trans({}, 'iec') }}')) customJqueryAjaxLoad('{{ path( 'mmf_iec_delete', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': 'all' }) }}', undefined, '#{{ js_dialog_var }}')">{{ 'Delete all entries' | trans({}, 'iec') }}</a>
     <ul id="{{ js_dialog_var }}-ul-sortable" class="mmf-iec-ul-sortable">
     {% for key, entry in content.getContent() %}
 	    <li id="mmf-iec-li-sortable_{{ key }}" class="ui-state-default mmf-iec-li-sortable">
             <a title="{{ 'To move this entry just drag & drop this icon' | trans({}, 'iec') }}" class="mmf-iec-button-move" href="javascript:void(0)">{{ 'Move' | trans({}, 'iec') }}</a>
-            <a title="{{ 'Delete this entry' | trans({}, 'iec') }}" class="mmf-iec-button-delete" href="javascript:void(0)" onclick="if (confirm('{{ 'Are you sure?' | trans({}, 'iec') }}')) customJqueryAjaxLoad('{{ path( 'mmf_iec_delete', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': key }) }}')">{{ 'Delete' | trans({}, 'iec') }}</a>
-            <a title="{{ 'Add a new entry just below this one' | trans({}, 'iec') }}" class="mmf-iec-button-add" href="javascript:void(0)" onclick="customJqueryAjaxLoad('{{ path( 'mmf_iec_collection_add', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': key+1 }) }}')">{{ 'Add entry just below' | trans({}, 'iec') }}</a>
-            <a title="{{ 'Edit this entry' | trans({}, 'iec') }}" class="mmf-iec-button-edit" href="javascript:void(0)" onclick="customJqueryAjaxLoad('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': key}) }}')" >{{ 'Edit' | trans({}, 'iec') }}</a>
+            <a title="{{ 'Delete this entry' | trans({}, 'iec') }}" class="mmf-iec-button-delete" href="javascript:void(0)" onclick="if (confirm('{{ 'Are you sure?' | trans({}, 'iec') }}')) customJqueryAjaxLoad('{{ path( 'mmf_iec_delete', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': key }) }}', undefined, '#{{ js_dialog_var }}')">{{ 'Delete' | trans({}, 'iec') }}</a>
+            <a title="{{ 'Add a new entry just below this one' | trans({}, 'iec') }}" class="mmf-iec-button-add" href="javascript:void(0)" onclick="customJqueryAjaxLoad('{{ path( 'mmf_iec_collection_add', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': key+1 }) }}', undefined, '#{{ js_dialog_var }}')">{{ 'Add entry just below' | trans({}, 'iec') }}</a>
+            <a title="{{ 'Edit this entry' | trans({}, 'iec') }}" class="mmf-iec-button-edit" href="javascript:void(0)" onclick="customJqueryAjaxLoad('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler, 'content_container_id': content_container_id, 'content_order': key}) }}', undefined, '#{{ js_dialog_var }}')" >{{ 'Edit' | trans({}, 'iec') }}</a>
             &nbsp;
             {{ entry | raw }}
 	    </li>
@@ -37,7 +37,7 @@ $( "#{{ js_dialog_var }}-ul-sortable" ).sortable({
 	handle: ".mmf-iec-button-move",
 	update : function (event, ui) {
         //alert($(this).sortable('serialize'));
-        customJqueryAjaxLoad('{{ path( 'mmf_iec_collection_sort', { 'handler': content.handler, 'content_container_id': content_container_id, 'reload_container' : 'true' }) }}', $(this).sortable('serialize'));
+        customJqueryAjaxLoad('{{ path( 'mmf_iec_collection_sort', { 'handler': content.handler, 'content_container_id': content_container_id, 'reload_container' : 'true' }) }}', $(this).sortable('serialize'), '#{{ js_dialog_var }}');
     }
 });
 

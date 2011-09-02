@@ -8,28 +8,42 @@
 
 <script type="text/javascript">
 //<![CDATA[
-
-function customJqueryAjaxLoad(url, data)
+function customBlock(settings, blockUI_target)
 {
+    if(blockUI_target){
+        $(blockUI_target).block(settings);
+    }
+    else{
+        $.blockUI(settings);
+    }
+}
 
- $.blockUI({
+function customUnblock(blockUI_target)
+{
+    if(blockUI_target){
+        $(blockUI_target).unblock();
+    }
+    else{
+        $.unblockUI();
+    }
+}
+
+function customJqueryAjaxLoad(url, data, blockUI_target)
+{
+    customBlock({
             message: '<p><img width="10px" src="{{ asset('bundles/muchomasfacilinlineeditablecontents/images/busy.gif') }}" /> {{ 'Loading' | trans({}, 'iec') }}...</p>',
             css: { backgroundColor: '#fff', font: '10px bold Arial, Helvetica, sans-serif' },
             overlayCSS: {backgroundColor: '#555'}//,
             //baseZ: 2000
-        });
-
-  if (data){
-      $.ajax(url, {
-        data: data,
-        type: 'POST'
-      }).fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, 'iec') }}: '+ textStatus )});
-  }
-  else {
-    $.get(url)
-        .fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, 'iec') }}: '+ textStatus )});
-  }
-  $.unblockUI();
+        }, blockUI_target);
+    if (data){
+        settings = { data: data, type: 'POST'};
+    }
+    else {
+        settings = { data: data, type: 'GET'};
+    }
+    customUnblock(blockUI_target);
+    $.ajax(url, settings).fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, 'iec') }}: '+ textStatus )});
 }
 
 $(document).ready(function(){
@@ -42,7 +56,7 @@ $(document).ready(function(){
 {% endif %}
         $('#{{ entry.content_container_id }}')
             .dblclick(function(){
-                customJqueryAjaxLoad('{{ script_url }}');
+                customJqueryAjaxLoad('{{ script_url }}', undefined , '#{{ entry.content_container_id }}');
             })//closes dblclick
             .addClass('mmf-iec-editable')
             .hover(

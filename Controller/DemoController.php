@@ -10,6 +10,10 @@ class DemoController extends Controller
 
     public function indexAction()
     {
+        /*if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }*/
+
         $em = $this->get('doctrine')->getEntityManager();
         $contents['page-h1'] = array(
             'content_container_id' => 'h1-page-h1'
@@ -35,4 +39,16 @@ class DemoController extends Controller
 
         return $this->render('MuchoMasFacilInlineEditableContentsBundle:Demo:index.html.twig', array('contents' => $contents));
     }
+
+    public function loginAction()
+    {
+        $this->redirect($this->getUrl('demo'));
+    }
+
+    public function loginOut()
+    {
+
+        $this->redirect($this->getUrl('demo'));
+    }
+
 }

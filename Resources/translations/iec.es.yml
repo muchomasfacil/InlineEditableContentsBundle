@@ -37,4 +37,10 @@ All entries were deleted successfully: Todas las entradas se eliminaron correcta
 #singleContentFormAction
 The entry was saved successfully: La entrada se salvó correctamente
 Correct form data: Corrija la información del formulario
+#demo
+logged in as: estás validado como
+log out: salir
+log in: validarte
+see this demo OUTSIDE the symfony security demo firewall (AcmeDemoBundle): ver esta demo DENTRO del firewall de demo de symfony (AcmeDemoBundle)
+see this demo INSIDE the symfony security demo firewall (AcmeDemoBundle): ver esta demo FUERA del firewall de demo de symfony (AcmeDemoBundle)
 
