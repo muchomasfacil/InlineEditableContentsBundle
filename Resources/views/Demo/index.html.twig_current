@@ -2,9 +2,9 @@
 
 {% block body %}
 
-    <h1 id="h1-page-h1" data-mmf-iec-editable-url="{{ content['page-h1'].content.getEditUrl() }}">{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-h1'].content.handler} %}</h1>
+    <h1 class="mmf-iec-editable" id="{{ contents['page-h1'].content_container_id }}">{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-h1'].content.handler} %}</h1>
 
-    <div id="div-page-html" data-mmf-iec-editable-url="path( 'mmf_iec_index', { 'handler': entry.content.getHandler(), 'content_container_id': entry.content_container_id })">{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-html'].content.handler} %}</h1>
+    <div id="{{ contents['page-html'].content_container_id }}">{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-html'].content.handler} %}</div>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -48,17 +48,23 @@ function customJqueryAjaxLoad(url, data, blockUI_target)
 
 $(document).ready(function(){
 
-    $('[data-mmf-iec-editable-url]')
-        .addClass('mmf-iec-editable')
-        .hover(
-            function () {$(this).addClass('mmf-iec-editable-hover');}
-            ,function () {$(this).removeClass('mmf-iec-editable-hover');}
-        )//closes hover
-        .dblclick(function(){
-            //customJqueryAjaxLoad($(this).attr('data-mmf-iec-editable-url'), undefined , $(this).attr('id'));
-            alert($(this).attr('id'))
-        })
-    ;
+{% for entry in contents %}
+{% if entry.content.collectionLength != 1 %}
+{% set script_url =  path( 'mmf_iec_collection', { 'handler': entry.content.getHandler(), 'content_container_id': entry.content_container_id })  %}
+{% else %}
+{% set script_url =  path( 'mmf_iec_editor_form', { 'handler': entry.content.getHandler(), 'content_container_id': entry.content_container_id })  %}
+{% endif %}
+        $('#{{ entry.content_container_id }}')
+            .dblclick(function(){
+                customJqueryAjaxLoad('{{ script_url }}', undefined , '#{{ entry.content_container_id }}');
+            })//closes dblclick
+            .addClass('mmf-iec-editable')
+            .hover(
+                function () {$(this).addClass('mmf-iec-editable-hover');}
+                ,function () {$(this).removeClass('mmf-iec-editable-hover');}
+            )//closes hover
+        ;//closes {{ entry.content_container_id }}
+{% endfor %}
 
 });//closes $(document).ready ...
 //]]>
