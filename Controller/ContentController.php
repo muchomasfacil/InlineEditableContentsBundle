@@ -23,6 +23,26 @@ class ContentController extends Controller
       return $this->render_vars['bundle_name'] . ':' . $this->render_vars['controller_name'] . ':' . $this->render_vars['action_name'] . '.'.$template_format.'.twig';
     }
 
+    public function jsIncludeAction()
+    {
+        return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'js'), $this->render_vars);
+    }
+
+
+    public function indexAction($handler, $content_container_id)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        if ($content->getCollectionLength() == 1){
+            $action_name = 'editorForm';
+        }
+        else {
+            $action_name = 'collection';
+        }
+        return $this->forward($this->render_vars['bundle_name'] . ':' . $this->render_vars['controller_name'] . ':'.$action_name, array('handler' => $handler, 'content_container_id' => $content_container_id));
+    }
+
+
     public function renderAction($handler)
     {
         $em = $this->get('doctrine')->getEntityManager();
@@ -197,3 +217,4 @@ class ContentController extends Controller
     }
 
 }
+

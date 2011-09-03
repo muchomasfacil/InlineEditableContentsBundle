@@ -1,0 +1,53 @@
+function customBlock(settings, blockUI_target)
+{
+    if(blockUI_target){
+        $(blockUI_target).block(settings);
+    }
+    else{
+        $.blockUI(settings);
+    }
+}
+
+function customUnblock(blockUI_target)
+{
+    if(blockUI_target){
+        $(blockUI_target).unblock();
+    }
+    else{
+        $.unblockUI();
+    }
+}
+
+function customJqueryAjaxLoad(url, data, blockUI_target)
+{
+    customBlock({
+            message: '<p><img width="10px" src="{{ asset('bundles/muchomasfacilinlineeditablecontents/images/busy.gif') }}" /> {{ 'Loading' | trans({}, 'iec') }}...</p>',
+            css: { backgroundColor: '#fff', font: '10px bold Arial, Helvetica, sans-serif' },
+            overlayCSS: {backgroundColor: '#555'}//,
+            //baseZ: 2000
+        }, blockUI_target);
+    if (data){
+        settings = { data: data, type: 'POST'};
+    }
+    else {
+        settings = { data: data, type: 'GET'};
+    }
+    customUnblock(blockUI_target);
+    $.ajax(url, settings).fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, 'iec') }}: '+ textStatus )});
+}
+
+$(document).ready(function(){
+
+    $('[data-mmf-iec-editable-url]')
+        .addClass('mmf-iec-editable')
+        .hover(
+            function () {$(this).addClass('mmf-iec-editable-hover');}
+            ,function () {$(this).removeClass('mmf-iec-editable-hover');}
+        )//closes hover
+        .dblclick(function(){
+            customJqueryAjaxLoad($(this).attr('data-mmf-iec-editable-url'), undefined , '#' + $(this).attr('id'));
+            //alert($(this).attr('id'))
+        })
+    ;
+
+});//closes $(document).ready ...

@@ -6,9 +6,20 @@ mmf_iec_demo:
     pattern:  /mmf_iec_demo
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Demo:index }
 
+#-------------------------------------------------------------------------------
+
 mmf_iec_render:
     pattern:  /mmf_iec_render/{handler}
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:render }
+
+mmf_iec_index:
+    pattern:  /mmf_iec_index/{handler}/{content_container_id}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:index}
+
+mmf_iec_js_include:
+    pattern:  /mmf_iec_js_include.js
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:jsInclude}
+
 
 mmf_iec_collection:
     pattern:  /mmf_iec_collection_list/{handler}/{content_container_id}/{reload_container}

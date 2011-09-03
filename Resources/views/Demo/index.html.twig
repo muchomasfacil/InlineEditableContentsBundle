@@ -2,67 +2,17 @@
 
 {% block body %}
 
-    <h1 id="h1-page-h1" data-mmf-iec-editable-url="{{ content['page-h1'].content.getEditUrl() }}">{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-h1'].content.handler} %}</h1>
+    <h1 id="h1-page-h1" data-mmf-iec-editable-url="{{ path('mmf_iec_index' , {'handler': contents['page-h1'].handler, 'content_container_id':'h1-page-h1'}) }}">
+    {% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-h1'].handler} %}
+    </h1>
 
-    <div id="div-page-html" data-mmf-iec-editable-url="path( 'mmf_iec_index', { 'handler': entry.content.getHandler(), 'content_container_id': entry.content_container_id })">{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-html'].content.handler} %}</h1>
-
-<script type="text/javascript">
-//<![CDATA[
-function customBlock(settings, blockUI_target)
-{
-    if(blockUI_target){
-        $(blockUI_target).block(settings);
-    }
-    else{
-        $.blockUI(settings);
-    }
-}
-
-function customUnblock(blockUI_target)
-{
-    if(blockUI_target){
-        $(blockUI_target).unblock();
-    }
-    else{
-        $.unblockUI();
-    }
-}
-
-function customJqueryAjaxLoad(url, data, blockUI_target)
-{
-    customBlock({
-            message: '<p><img width="10px" src="{{ asset('bundles/muchomasfacilinlineeditablecontents/images/busy.gif') }}" /> {{ 'Loading' | trans({}, 'iec') }}...</p>',
-            css: { backgroundColor: '#fff', font: '10px bold Arial, Helvetica, sans-serif' },
-            overlayCSS: {backgroundColor: '#555'}//,
-            //baseZ: 2000
-        }, blockUI_target);
-    if (data){
-        settings = { data: data, type: 'POST'};
-    }
-    else {
-        settings = { data: data, type: 'GET'};
-    }
-    customUnblock(blockUI_target);
-    $.ajax(url, settings).fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, 'iec') }}: '+ textStatus )});
-}
-
-$(document).ready(function(){
-
-    $('[data-mmf-iec-editable-url]')
-        .addClass('mmf-iec-editable')
-        .hover(
-            function () {$(this).addClass('mmf-iec-editable-hover');}
-            ,function () {$(this).removeClass('mmf-iec-editable-hover');}
-        )//closes hover
-        .dblclick(function(){
-            //customJqueryAjaxLoad($(this).attr('data-mmf-iec-editable-url'), undefined , $(this).attr('id'));
-            alert($(this).attr('id'))
-        })
-    ;
-
-});//closes $(document).ready ...
-//]]>
-</script>
+    <div id="div-page-html" data-mmf-iec-editable-url="{{ path('mmf_iec_index' , {'handler': contents['page-html'].handler, 'content_container_id':'div-page-html'}) }}">
+    {% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-html'].handler} %}
+    </h1>
 
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ path('mmf_iec_js_include') }}" type="text/javascript"></script>
+{% endblock %}

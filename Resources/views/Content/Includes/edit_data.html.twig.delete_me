@@ -1,0 +1,5 @@
+{% if content.getCollectionLength() == 1 %}
+    {{ path('mmf_iec_editor_form', {'handler': handler, 'content_container_id': content_container_id }) }}
+{% else %}
+    {{ path('mmf_iec_editor_form', {'handler': handler, 'content_container_id': content_container_id }) }}
+{% endif %}

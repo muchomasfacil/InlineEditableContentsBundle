@@ -28,6 +28,7 @@ class Content
     {
       return Yaml::parse($this->getYmlParams());
     }
+
 //------------------------------------------------------------------------------
 
 
@@ -90,7 +91,7 @@ class Content
     /**
      * Get handler
      *
-     * @return string 
+     * @return string
      */
     public function getHandler()
     {
@@ -110,7 +111,7 @@ class Content
     /**
      * Get yml_params
      *
-     * @return text 
+     * @return text
      */
     public function getYmlParams()
     {
@@ -130,7 +131,7 @@ class Content
     /**
      * Get yml_editor_roles
      *
-     * @return text 
+     * @return text
      */
     public function getYmlEditorRoles()
     {
@@ -150,7 +151,7 @@ class Content
     /**
      * Get yml_admin_roles
      *
-     * @return text 
+     * @return text
      */
     public function getYmlAdminRoles()
     {
@@ -170,7 +171,7 @@ class Content
     /**
      * Get entity_class
      *
-     * @return string 
+     * @return string
      */
     public function getEntityClass()
     {
@@ -190,7 +191,7 @@ class Content
     /**
      * Get form_class
      *
-     * @return string 
+     * @return string
      */
     public function getFormClass()
     {
@@ -210,7 +211,7 @@ class Content
     /**
      * Get collection_length
      *
-     * @return integer 
+     * @return integer
      */
     public function getCollectionLength()
     {
@@ -230,7 +231,7 @@ class Content
     /**
      * Get render_template
      *
-     * @return string 
+     * @return string
      */
     public function getRenderTemplate()
     {
@@ -250,10 +251,11 @@ class Content
     /**
      * Get content
      *
-     * @return array 
+     * @return array
      */
     public function getContent()
     {
         return $this->content;
     }
 }
+
