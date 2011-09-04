@@ -23,6 +23,17 @@ class ContentController extends Controller
       return $this->render_vars['bundle_name'] . ':' . $this->render_vars['controller_name'] . ':' . $this->render_vars['action_name'] . '.'.$template_format.'.twig';
     }
 
+    private function getContentByHandler($handler)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        if (!$content) {
+            throw $this->createNotFoundException($this->get('translator')->trans('No content found for handler', array(), 'iec'). ' '.$handler);
+        }
+
+        return $content;
+    }
+
     public function jsIncludeAction()
     {
         return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'js'), $this->render_vars);
@@ -31,8 +42,8 @@ class ContentController extends Controller
 
     public function indexAction($handler, $content_container_id)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        $content = $this->getContentByHandler($handler);
+
         if ($content->getCollectionLength() == 1){
             $action_name = 'editorForm';
         }
@@ -45,19 +56,31 @@ class ContentController extends Controller
 
     public function renderAction($handler)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
-        $params = $content->getParsedParams();
+        $content = $this->getContentByHandler($handler);
 
         $this->render_vars['content'] = $content;
         return $this->render($content->getRenderTemplate(), $this->render_vars);
     }
 
+    public function renderWithContainerAction($handler, $container_html_tag = 'div', $container_html_attributes = '')
+    {
+        $content = $this->getContentByHandler($handler);
+        $content_container_id = $container_html_tag . '-' . $content->getHandler();
+
+        if ((true === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) || (true === $this->get('security.context')->isGranted($content->getParsedAdminRoles()))) {
+            $container_html_attributes .= ' data-mmf-iec-editable-url="'.$this->get('router')->generate('mmf_iec_index', array('handler'=> $content->getHandler(), 'content_container_id'=> $content_container_id)).'"';
+        }
+
+        $this->render_vars['content'] = $content;
+        $this->render_vars['container_html_tag'] = $container_html_tag;
+        $this->render_vars['container_html_attributes'] = $container_html_attributes;
+        $this->render_vars['content_container_id'] = $content_container_id;
+        return $this->render($this->getTemplateNameByDefaults(__FUNCTION__), $this->render_vars);
+    }
+
     public function collectionAction($handler, $content_container_id, $reload_container = false)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-
-        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        $content = $this->getContentByHandler($handler);
 
         $this->render_vars['content_container_id'] = $content_container_id;
         $this->render_vars['reload_container'] = $reload_container;
@@ -67,11 +90,8 @@ class ContentController extends Controller
 
     public function sortCollectionAction($handler, $content_container_id, $reload_container = false)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-
-        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        $content = $this->getContentByHandler($handler);
         $content_content = $content->getContent();
-
         $li_sortable = $this->get('request')->get('mmf-iec-li-sortable');
         $new_content = array();
         foreach ($li_sortable as $value){
@@ -79,6 +99,7 @@ class ContentController extends Controller
         }
 
         $content->setContent(array_values($new_content));
+        $em = $this->get('doctrine')->getEntityManager();
         $em->persist($content);
         $em->flush();
 
@@ -93,13 +114,11 @@ class ContentController extends Controller
 
     public function addSingleContentAction($handler, $content_container_id, $content_order)
     {
+        $content = $this->getContentByHandler($handler);
         try
         {
-            $em = $this->get('doctrine')->getEntityManager();
-
-            $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
             $content_content = $content->getContent();
-            if ((!is_null($content->getCollectionLength())) && (count($content_content) >= $content->getCollectionLength())) {
+            if ((!empty($content->getCollectionLength())) && (count($content_content) >= $content->getCollectionLength())) {
                 $flash_messages[] = array('error' => $this->get('translator')->trans('Overpassed maximum number of items for this content', array(), 'iec'). ': '.$content->getCollectionLength());
                 $reload_container = false;
             }
@@ -117,6 +136,7 @@ class ContentController extends Controller
                 }
                 $reload_container = true;
                 $content->setContent(array_values($content_content));
+                $em = $this->get('doctrine')->getEntityManager();
                 $em->persist($content);
                 $em->flush();
                 $flash_messages[] = array('highlight' => $this->get('translator')->trans('The new entry was created successfully', array(), 'iec'));
@@ -136,9 +156,7 @@ class ContentController extends Controller
 
     public function deleteContentAction($handler, $content_container_id, $content_order)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-
-        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        $content = $this->getContentByHandler($handler);
         $content_content = $content->getContent();
 
         if (isset($content_content[$content_order]))
@@ -160,7 +178,7 @@ class ContentController extends Controller
             $flash_messages[] = array('highlight' => $this->get('translator')->trans('All entries were deleted successfully', array(), 'iec'));
             $reload_container = true;
         }
-
+        $em = $this->get('doctrine')->getEntityManager();
         $em->persist($content);
         $em->flush();
 
@@ -174,9 +192,7 @@ class ContentController extends Controller
     public function editorFormAction($handler, $content_container_id, $content_order = 0, $action_if_success = false)
     {
         $request = $this->get('request');
-        $em = $this->get('doctrine')->getEntityManager();
-
-        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        $content = $this->getContentByHandler($handler);
         $content_content = $content->getContent();
         $single_content = $content_content[$content_order];
         //$logger = $this->get('logger')->info('hola' . get_class($single_content));
@@ -185,6 +201,7 @@ class ContentController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
             if ($form->isValid()) {
+                $em = $this->get('doctrine')->getEntityManager();
                 $content_content[$content_order] = $single_content;
                 //double flush with null entry to avoid the unitofwork not updating the array
                 $content->setContent(null);
@@ -217,4 +234,3 @@ class ContentController extends Controller
     }
 
 }
-

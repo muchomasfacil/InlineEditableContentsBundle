@@ -8,3 +8,17 @@ MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\RichText:
         content:
             - NotBlank: ~
 
+MuchoMasFacil\InlineEditableContentsBundle\Entity\Content:
+    properties:
+        content:
+            - NotBlank: ~
+
+#        yml_params: {type: text}
+#        yml_editor_roles: {type: text}
+#        yml_admin_roles: {type: text}
+#        entity_class: {type: string, length: 255}
+#        form_class: {type: string, length: 255}
+#        collection_length: {type: integer, nullable: true}
+#        render_template: {type: string, length: 255}
+#        content: {type: array, nullable: true}
+

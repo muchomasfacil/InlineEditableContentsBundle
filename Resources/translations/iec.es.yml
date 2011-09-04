@@ -13,6 +13,7 @@ Save and close: Salvar y cerrar
 Error making an ajax call: Error realizando llamada Ajax
 Editing content with handler: Editando entrada con clave
 Are you sure?: ¿Está seguro?
+No content found for handler: No se encontró contenido para el identificador
 #collectionAction
 Add entry here on top: Añadir entrada aquí arriba
 Delete all entries: Borrar todas las entradas

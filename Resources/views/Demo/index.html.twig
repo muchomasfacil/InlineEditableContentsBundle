@@ -2,17 +2,16 @@
 
 {% block body %}
 
-    <h1 id="h1-page-h1" data-mmf-iec-editable-url="{{ path('mmf_iec_index' , {'handler': contents['page-h1'].handler, 'content_container_id':'h1-page-h1'}) }}">
-    {% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-h1'].handler} %}
-    </h1>
-
-    <div id="div-page-html" data-mmf-iec-editable-url="{{ path('mmf_iec_index' , {'handler': contents['page-html'].handler, 'content_container_id':'div-page-html'}) }}">
-    {% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': contents['page-html'].handler} %}
-    </h1>
+    {% render 'MuchoMasFacilInlineEditableContentsBundle:Content:renderWithContainer' with { 'handler': contents['page-h1'].handler, 'container_html_tag': 'h1', 'container_html_attributes': 'class="la-clase-que-sea" style="color: red"'} %}
+    {% render 'MuchoMasFacilInlineEditableContentsBundle:Content:renderWithContainer' with { 'handler': contents['page-html'].handler } %}
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ path('mmf_iec_js_include') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+    $.taconite.debug = true;
+    </script>
 {% endblock %}
+

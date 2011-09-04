@@ -1,16 +1,18 @@
 TODO for the  InlineEditableWidgetsBundle
 =========================================
-- Securing: ajax actions utilizar los roles de admin y de editor...
-- formulario de administrador
+
+------ formulario de administrador (haciendo validación)
 - completar ckeditor con ckfinder o el file manager...
 - añadir opción de imágenes/ficheros al ckeditor
+- testar correcto funcionamiento del collection_length
+
 
 - CONFIGURACIONES DEL BUNDLE:
     - algo de css o js?
     - default values para content entity con cada tipo de content
     - configuraciones para ckeditor o file manager
 
-- input de tipo file en formularios (las llamadas son ajax...)
+- input de tipo file en formularios (las llamadas son ajax...) utilizar el form plugin de malsup...
 - custom yml validator... para los campos yml
 - custom form type ckeditor... ajax file upload... u otros...
 - form styling including errors

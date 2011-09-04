@@ -1,0 +1,4 @@
+<{{ container_html_tag }} id="{{ content_container_id }}" {{ container_html_attributes | raw }}>
+{% render "MuchoMasFacilInlineEditableContentsBundle:Content:render" with {'handler': content.getHandler()} %}
+</{{ container_html_tag }}>
+

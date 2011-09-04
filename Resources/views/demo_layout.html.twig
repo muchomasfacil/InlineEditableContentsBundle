@@ -19,11 +19,6 @@
 {% endblock %}
     </head>
     <body>
-        <ul>
-          <li><a href="{{ path('mmf_iec_demo') }}"> {{ 'see this demo INSIDE the symfony security demo firewall (AcmeDemoBundle)' | trans( {}, 'iec') }}</a></li>
-          <li><a href="{{ path('mmf_iec_demo_secured') }}"> {{ 'see this demo OUTSIDE the symfony security demo firewall (AcmeDemoBundle)' | trans( {}, 'iec') }}</a></li>
-        </ul>
-
         <p>{{ 'logged in as' | trans( {}, 'iec') }} <strong>{{ app.user ? app.user.username : 'Anonymous' }}</strong> - <a href="{{ path('_demo_logout') }}"> {{ 'logout' | trans( {}, 'iec') }}</a></p>
 
         {% block body %}{% endblock %}
