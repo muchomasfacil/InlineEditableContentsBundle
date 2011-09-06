@@ -35,9 +35,14 @@ Overpassed maximum number of items for this content: Se sobrepasó el máximo nu
 The entry was deleted successfully: La entrada se eliminó correctamente
 The entry did not exist. Nothing deleted: La entrada no existe. No se borró nada
 All entries were deleted successfully: Todas las entradas se eliminaron correctamente
-#singleContentFormAction
+#EditorFormAction
 The entry was saved successfully: La entrada se salvó correctamente
 Correct form data: Corrija la información del formulario
+#AdminFormAction
+Editor form: Formulario de editor
+Advanced options: Opciones avanzadas
+Only edit here if you know what you are doing: Edita aquí sólo si sabes lo que estás haciendo
+Back: Volver
 #demo
 logged in as: estás validado como
 log out: salir

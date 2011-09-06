@@ -10,7 +10,20 @@ MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\RichText:
 
 MuchoMasFacil\InlineEditableContentsBundle\Entity\Content:
     properties:
-        content:
+        #yml_params:
+            #Yml: ~
+        #yml_editor_roles:
+            #Yml: ~
+        #yml_admin_roles:
+            #Yml: ~
+        entity_class:
+            - NotBlank: ~
+        form_class:
+            - NotBlank: ~
+        collection_length:
+            - Min:
+                limit: 1
+        render_template:
             - NotBlank: ~
 
 #        yml_params: {type: text}

@@ -12,7 +12,9 @@ class RichTextType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('content', 'textarea');
+            ->add('content', 'textarea', array(
+              'attr' => array('data-ckeditor'=> 'default')
+            ));
     }
 
     public function getName()

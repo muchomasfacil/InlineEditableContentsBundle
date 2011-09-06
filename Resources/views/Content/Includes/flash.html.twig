@@ -1,22 +1,21 @@
 {% if flash_messages is defined %}
-{% set div_style = 'padding: .1em; margin-bottom: 10px' %}
     {% for flash_message in flash_messages %}
 
         {% for class, message in flash_message %}
 
        {% if class == 'error' %}
-<div class="div-error ui-state-error ui-corner-all" style="{{ div_style }}">
-    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+<div class="div-error ui-state-error ui-corner-all mmf-iec-div-flash" >
+    <span class="ui-icon ui-icon-alert" ></span>
     {{ message }}
 </div>
         {% elseif class == 'highlight' %}
-<div class="div-highlight ui-state-highlight ui-corner-all" style="{{ div_style }}">
-    <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+<div class="div-highlight ui-state-highlight ui-corner-all mmf-iec-div-flash" >
+    <span class="ui-icon ui-icon-info"></span>
     {{ message }}
 </div>
         {% else %}
-<div class="{{ class }}" style="{{ div_style }}">
-    <span class="ui-icon ui-icon-check" style="float: left; margin-right: .3em;"></span>
+<div class="{{ class }} mmf-iec-div-flash">
+    <span class="ui-icon ui-icon-check></span>
     {{ message }}
 </div>
         {% endif %}

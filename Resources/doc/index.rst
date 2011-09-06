@@ -12,12 +12,13 @@ TODO for the  InlineEditableWidgetsBundle
     - default values para content entity con cada tipo de content
     - configuraciones para ckeditor o file manager
 
+- incluir acción de edit admin (tiene que estar todo bajo un firewall, excepto el render)
 - input de tipo file en formularios (las llamadas son ajax...) utilizar el form plugin de malsup...
-- custom yml validator... para los campos yml
+- custom yml validator... para los campos yml (usando callback contraint o un custom constraint)
 - custom form type ckeditor... ajax file upload... u otros...
 - form styling including errors
 - ver en content demo qué hacer si no existe en render o en collection el handler en base de datos... find en vez de findifnotexist
-- Testar validator que los handlers y los container id sólo contienen a-z, 0-9, y - y _
+- Testar validator que los handlers y los container id sólo contienen a-z, 0-9, y - y _ (constraint regexp)
 - Validación para testar que están los js adecuados (tanto para el admin como para los renders) o un helper para añadirlos...
 - crear combinaciones de opciones de ckeditor
 - try catch del rendering de si existe el form_class y o el entity_class
@@ -43,6 +44,7 @@ git status
 git add ...
 git commit -m 'Commit description'
 git push origin master
+git pull
 
 Js and css requisites
 ---------------------

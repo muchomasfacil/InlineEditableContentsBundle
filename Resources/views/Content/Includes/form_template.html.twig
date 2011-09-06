@@ -3,7 +3,6 @@
 {% set form_id = js_dialog_var ~ '_form' %}
 
 {% include bundle_name ~ ':' ~ controller_name ~ ':Includes/flash.html.twig' %}
-
 <form id="{{ form_id }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
 </form>
@@ -24,6 +23,13 @@ if (typeof(CKEDITOR) == 'object'){
     $( "#{{ js_dialog_var }}" ).dialog('option',
     {
         buttons: {
+{#% if is_granted(content.getParsedAdminRoles()) %#}
+{% if content.collectionLength == 1 and false %}
+          '{{ 'Advanced options' | trans({}, 'iec') }}': function () {
+              customJqueryAjaxLoad('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
+          },
+{% endif %}
+
 {% if content.collectionLength != 1 %}
           '{{ 'List' | trans({}, 'iec') }}': function () {
               customJqueryAjaxLoad('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');

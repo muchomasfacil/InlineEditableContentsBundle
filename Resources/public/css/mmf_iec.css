@@ -11,3 +11,6 @@
 .mmf-iec-ul-sortable {list-style: none; margin: 0px; padding: 0px;}
 .mmf-iec-li-sortable {padding: .2em; margin: 5px 0px}
 
+.mmf-iec-div-flash {padding: .1em; margin-bottom: 10px}
+.mmf-iec-div-flash span{float: left; margin-right: .3em;}
+

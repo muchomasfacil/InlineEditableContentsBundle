@@ -3,8 +3,9 @@
 namespace MuchoMasFacil\InlineEditableContentsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\PlainText;
-use MuchoMasFacil\InlineEditableContentsBundle\Form\Content\PlainTextType;
+
+//use MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\PlainText;
+use MuchoMasFacil\InlineEditableContentsBundle\Form\ContentType;
 
 class ContentController extends Controller
 {
@@ -118,7 +119,7 @@ class ContentController extends Controller
         try
         {
             $content_content = $content->getContent();
-            if ((!empty($content->getCollectionLength())) && (count($content_content) >= $content->getCollectionLength())) {
+            if ((!is_null($content->getCollectionLength())) && (count($content_content) >= $content->getCollectionLength())) {
                 $flash_messages[] = array('error' => $this->get('translator')->trans('Overpassed maximum number of items for this content', array(), 'iec'). ': '.$content->getCollectionLength());
                 $reload_container = false;
             }
@@ -194,6 +195,11 @@ class ContentController extends Controller
         $request = $this->get('request');
         $content = $this->getContentByHandler($handler);
         $content_content = $content->getContent();
+        if (!isset($content_content[$content_order]))
+        {
+            $entity_class = $content->getEntityClass();
+            $content_content[$content_order] = new $entity_class();
+        }
         $single_content = $content_content[$content_order];
         //$logger = $this->get('logger')->info('hola' . get_class($single_content));
         $type_class = $content->getFormClass();
@@ -226,6 +232,38 @@ class ContentController extends Controller
         $this->render_vars['form'] = $form->createView();
         $this->render_vars['content_order'] = $content_order;
         $this->render_vars['action_if_success'] = $action_if_success;
+
+        $this->render_vars['content_container_id'] = $content_container_id;
+        $this->render_vars['reload_container'] = (isset($reload_container))? $reload_container: false;
+        $this->render_vars['content'] = $content;
+        return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'xml'), $this->render_vars);
+    }
+
+    public function adminFormAction($handler, $content_container_id)
+    {
+        $request = $this->get('request');
+        $content = $this->getContentByHandler($handler);
+        $form = $this->get('form.factory')->create(new ContentType(), $content);
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+            if ($form->isValid()) {
+                $em = $this->get('doctrine')->getEntityManager();
+                $em->persist($content);
+                $em->flush();
+
+                $flash_messages[] = array('highlight' => $this->get('translator')->trans('The entry was saved successfully', array(), 'iec'));
+                $reload_container = true;
+            }
+            else{
+                $flash_messages[] = array('error' => $this->get('translator')->trans('Correct form data', array(), 'iec'));
+                $action_if_success = false;
+            }
+        }
+
+        //if (isset($flash_messages)) $this->get('session')->setFlash('flash_messages', $flash_messages);
+        if (isset($flash_messages)) $this->render_vars['flash_messages'] = $flash_messages;
+
+        $this->render_vars['form'] = $form->createView();
 
         $this->render_vars['content_container_id'] = $content_container_id;
         $this->render_vars['reload_container'] = (isset($reload_container))? $reload_container: false;

@@ -29,7 +29,16 @@
 
     <eval><![CDATA[
 
-$( "#{{ js_dialog_var }}" ).dialog('option', {buttons: {}});
+$( "#{{ js_dialog_var }}" ).dialog('option', {
+    buttons: {
+{#% if is_granted(content.getParsedAdminRoles()) %#}
+{% if false %}
+          '{{ 'Advanced options' | trans({}, 'iec') }}': function () {
+              customJqueryAjaxLoad('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
+          },
+{% endif %}
+    }
+});
 
 $( "#{{ js_dialog_var }}-ul-sortable" ).sortable({
 	placeholder: "ui-state-highlight",
