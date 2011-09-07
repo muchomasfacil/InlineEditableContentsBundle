@@ -8,7 +8,7 @@ if( typeof( ${{ js_dialog_var }} ) == 'undefined' )
             title: '{{ 'Editing content with handler'  | trans({}, 'iec') }} "{{ content.handler }}"',
             width: Math.min(800,$(window).width()*90/100),
             height: Math.min(600,$(window).height()*90/100),
-            //modal: true,
+            modal: true, //if not it would be possible to be input files with same id (entity_name_field)
             close: function() {
                 ${{ js_dialog_var }}.html('');
             }

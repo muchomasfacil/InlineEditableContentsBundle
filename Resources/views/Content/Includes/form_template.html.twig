@@ -14,11 +14,23 @@
 
 //TODO HAY QUE CAMBIARLO PARA QUE QUITE LAS INSTANCIAS EN ESTE DIALOG SÓLAMENTE
 //delete possible ckeditor instances
-if (typeof(CKEDITOR) == 'object'){
-  for ( x in CKEDITOR.instances){
-   delete CKEDITOR.instances[x];
-  }
-}
+//if (typeof(CKEDITOR) == 'object'){
+//  for ( x in CKEDITOR.instances){
+//   alert(x);
+//   delete CKEDITOR.instances[x];
+//  }
+//}
+
+$('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
+    //alert($(this).attr('data-mmf-iec-ckeditor'))
+    delete CKEDITOR.instances[$(this).attr('id')];
+    })
+    .ckeditor(function(),{
+        //customConfig : '/custom/ckeditor_config.js' y esto una acción ...
+        //http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
+    });
+
+
 
     $( "#{{ js_dialog_var }}" ).dialog('option',
     {

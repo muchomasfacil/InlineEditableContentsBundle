@@ -1,7 +1,6 @@
 TODO for the  InlineEditableWidgetsBundle
 =========================================
 
------- formulario de administrador (haciendo validación)
 - completar ckeditor con ckfinder o el file manager...
 - añadir opción de imágenes/ficheros al ckeditor
 - testar correcto funcionamiento del collection_length
@@ -12,7 +11,8 @@ TODO for the  InlineEditableWidgetsBundle
     - default values para content entity con cada tipo de content
     - configuraciones para ckeditor o file manager
 
-- incluir acción de edit admin (tiene que estar todo bajo un firewall, excepto el render)
++ formulario de administrador (haciendo validación)
+- incluir acción de edit admin (tiene que estar todo bajo un firewall, excepto el render) ahora está comentada
 - input de tipo file en formularios (las llamadas son ajax...) utilizar el form plugin de malsup...
 - custom yml validator... para los campos yml (usando callback contraint o un custom constraint)
 - custom form type ckeditor... ajax file upload... u otros...
