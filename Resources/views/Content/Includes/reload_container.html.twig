@@ -1,9 +1,14 @@
 {% if reload_container %}
-    <replaceContent select="#{{ content_container_id }}"><![CDATA[
-        {% render bundle_name ~ ':' ~ controller_name ~ ':render' with {'handler': content.handler} %}
+    <eval><![CDATA[
+    alert($('#{{ content_container_id }}').html());
     ]]>
+    </eval>
+    <replaceContent select="#{{ content_container_id }}">
+        {% render bundle_name ~ ':' ~ controller_name ~ ':render' with {'handler': content.handler} %}
     </replaceContent>
     <eval><![CDATA[
+    alert($('#{{ content_container_id }}').html());
+    $('#{{ content_container_id }}').html();
     $('#{{ content_container_id }}').block({
             message: '<p><img width="10px" src="{{ asset('bundles/muchomasfacilinlineeditablecontents/images/busy.gif') }}" /> {{ 'Content updated' | trans({}, 'iec') }}...</p>',
             css: { backgroundColor: '#fff', font: '10px bold Arial, Helvetica, sans-serif', width: '200px' },

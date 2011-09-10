@@ -1,5 +1,14 @@
 TODO for the  InlineEditableWidgetsBundle
 =========================================
+- bug, añade un <div> al hacer un replacecontent...
+    // add 'replace' and 'replaceContent' plugins (conditionally)
+    $.fn.replace = $.fn.replace || function(a) {
+        this.after(a);
+        this.remove();
+    };
+    $.fn.replaceContent = $.fn.replaceContent || function(a) {
+        return this.empty().append(a);
+    };
 
 - completar ckeditor con ckfinder o el file manager...
 - añadir opción de imágenes/ficheros al ckeditor
@@ -11,8 +20,6 @@ TODO for the  InlineEditableWidgetsBundle
     - default values para content entity con cada tipo de content
     - configuraciones para ckeditor o file manager
 
-+ formulario de administrador (haciendo validación)
-- incluir acción de edit admin (tiene que estar todo bajo un firewall, excepto el render) ahora está comentada
 - input de tipo file en formularios (las llamadas son ajax...) utilizar el form plugin de malsup...
 - custom yml validator... para los campos yml (usando callback contraint o un custom constraint)
 - custom form type ckeditor... ajax file upload... u otros...

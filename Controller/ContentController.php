@@ -4,7 +4,8 @@ namespace MuchoMasFacil\InlineEditableContentsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-//use MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\PlainText;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use MuchoMasFacil\InlineEditableContentsBundle\Form\ContentType;
 
 class ContentController extends Controller
@@ -29,7 +30,7 @@ class ContentController extends Controller
         $em = $this->get('doctrine')->getEntityManager();
         $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
         if (!$content) {
-            throw $this->createNotFoundException($this->get('translator')->trans('No content found for handler', array(), 'iec'). ' '.$handler);
+            throw $this->createNotFoundException($this->get('translator')->trans('No content afound for handler', array(), 'iec'). ' '.$handler);
         }
 
         return $content;
@@ -44,6 +45,10 @@ class ContentController extends Controller
     public function indexAction($handler, $content_container_id)
     {
         $content = $this->getContentByHandler($handler);
+
+        if (false === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) {
+            throw new AccessDeniedException();
+        }
 
         if ($content->getCollectionLength() == 1){
             $action_name = 'editorForm';
@@ -68,10 +73,11 @@ class ContentController extends Controller
         $content = $this->getContentByHandler($handler);
         $content_container_id = $container_html_tag . '-' . $content->getHandler();
 
-        if ((true === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) || (true === $this->get('security.context')->isGranted($content->getParsedAdminRoles()))) {
-            $container_html_attributes .= ' data-mmf-iec-editable-url="'.$this->get('router')->generate('mmf_iec_index', array('handler'=> $content->getHandler(), 'content_container_id'=> $content_container_id)).'"';
+        if (!is_null($this->get('security.context')->getToken())) {
+            if ((true === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) || (true === $this->get('security.context')->isGranted($content->getParsedAdminRoles()))) {
+                $container_html_attributes .= ' data-mmf-iec-editable-url="'.$this->get('router')->generate('mmf_iec_index', array('handler'=> $content->getHandler(), 'content_container_id'=> $content_container_id)).'"';
+            }
         }
-
         $this->render_vars['content'] = $content;
         $this->render_vars['container_html_tag'] = $container_html_tag;
         $this->render_vars['container_html_attributes'] = $container_html_attributes;
@@ -83,6 +89,10 @@ class ContentController extends Controller
     {
         $content = $this->getContentByHandler($handler);
 
+        if (false === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) {
+            throw new AccessDeniedException();
+        }
+
         $this->render_vars['content_container_id'] = $content_container_id;
         $this->render_vars['reload_container'] = $reload_container;
         $this->render_vars['content'] = $content;
@@ -92,6 +102,11 @@ class ContentController extends Controller
     public function sortCollectionAction($handler, $content_container_id, $reload_container = false)
     {
         $content = $this->getContentByHandler($handler);
+
+        if (false === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) {
+            throw new AccessDeniedException();
+        }
+
         $content_content = $content->getContent();
         $li_sortable = $this->get('request')->get('mmf-iec-li-sortable');
         $new_content = array();
@@ -116,6 +131,11 @@ class ContentController extends Controller
     public function addSingleContentAction($handler, $content_container_id, $content_order)
     {
         $content = $this->getContentByHandler($handler);
+
+        if (false === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) {
+            throw new AccessDeniedException();
+        }
+
         try
         {
             $content_content = $content->getContent();
@@ -158,6 +178,11 @@ class ContentController extends Controller
     public function deleteContentAction($handler, $content_container_id, $content_order)
     {
         $content = $this->getContentByHandler($handler);
+
+        if (false === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) {
+            throw new AccessDeniedException();
+        }
+
         $content_content = $content->getContent();
 
         if (isset($content_content[$content_order]))
@@ -192,8 +217,14 @@ class ContentController extends Controller
 
     public function editorFormAction($handler, $content_container_id, $content_order = 0, $action_if_success = false)
     {
-        $request = $this->get('request');
         $content = $this->getContentByHandler($handler);
+
+        if (false === $this->get('security.context')->isGranted($content->getParsedEditorRoles())) {
+            throw new AccessDeniedException();
+        }
+
+        $request = $this->get('request');
+
         $content_content = $content->getContent();
         if (!isset($content_content[$content_order]))
         {
@@ -241,8 +272,13 @@ class ContentController extends Controller
 
     public function adminFormAction($handler, $content_container_id)
     {
-        $request = $this->get('request');
         $content = $this->getContentByHandler($handler);
+
+        if (false === $this->get('security.context')->isGranted($content->getParsedAdminRoles())) {
+            throw new AccessDeniedException();
+        }
+        $request = $this->get('request');
+
         $form = $this->get('form.factory')->create(new ContentType(), $content);
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);

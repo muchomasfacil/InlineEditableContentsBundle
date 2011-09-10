@@ -25,23 +25,20 @@ $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
     //alert($(this).attr('data-mmf-iec-ckeditor'))
     delete CKEDITOR.instances[$(this).attr('id')];
     })
-    .ckeditor(function(),{
+    .ckeditor(function() {
         //customConfig : '/custom/ckeditor_config.js' y esto una acción ...
         //http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
     });
 
 
-
     $( "#{{ js_dialog_var }}" ).dialog('option',
     {
         buttons: {
-{#% if is_granted(content.getParsedAdminRoles()) %#}
-{% if content.collectionLength == 1 and false %}
+{% if (content.collectionLength == 1 and is_granted(content.getParsedAdminRoles())) %}
           '{{ 'Advanced options' | trans({}, 'iec') }}': function () {
               customJqueryAjaxLoad('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
           },
 {% endif %}
-
 {% if content.collectionLength != 1 %}
           '{{ 'List' | trans({}, 'iec') }}': function () {
               customJqueryAjaxLoad('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
