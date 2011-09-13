@@ -41,3 +41,7 @@ mmf_iec_delete:
     pattern:  /mmf_iec_delete_single_content/{handler}/{content_container_id}/{content_order}
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:deleteContent}
 
+mmf_iec_cache_clear:
+    pattern:  /mmf_iec_cache_clear
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:cacheClear}
+

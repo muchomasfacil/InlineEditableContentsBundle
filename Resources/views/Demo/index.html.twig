@@ -5,6 +5,8 @@
     {% render 'MuchoMasFacilInlineEditableContentsBundle:Content:renderWithContainer' with { 'handler': contents['page-h1'].handler, 'container_html_tag': 'h1', 'container_html_attributes': 'class="la-clase-que-sea" style="color: red"'} %}
     {% render 'MuchoMasFacilInlineEditableContentsBundle:Content:renderWithContainer' with { 'handler': contents['page-html'].handler } %}
 
+    {% render 'MuchoMasFacilInlineEditableContentsBundle:Content:renderWithContainer' with { 'handler': contents['img-img'].handler } %}
+
 {% endblock %}
 
 {% block javascripts %}
@@ -14,4 +16,3 @@
     $.taconite.debug = true;
     </script>
 {% endblock %}
-

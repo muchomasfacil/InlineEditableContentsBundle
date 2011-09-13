@@ -43,6 +43,12 @@ Editor form: Formulario de editor
 Advanced options: Opciones avanzadas
 Only edit here if you know what you are doing: Edita aquí sólo si sabes lo que estás haciendo
 Back: Volver
+#menu
+Menu: Menú
+Cache clear: Limpiar caché
+Cache cleared: Limpiada caché
+Unable to write in the cache directory: No se puede escribir en el directorio de cache
+Cache deleted succesfully: La cache se borró correctamente
 #demo
 logged in as: estás validado como
 log out: salir

@@ -20,7 +20,7 @@
 //   delete CKEDITOR.instances[x];
 //  }
 //}
-
+//ckeditor fields
 $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
     //alert($(this).attr('data-mmf-iec-ckeditor'))
     delete CKEDITOR.instances[$(this).attr('id')];
@@ -29,6 +29,10 @@ $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
         //customConfig : '/custom/ckeditor_config.js' y esto una acción ...
         //http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
     });
+//file manager fields
+$('#{{form_id}} text[data-mmf-fm]').each(function(){
+    alert($(this).attr('data-mmf-iec-ckeditor'))
+    });;
 
 
     $( "#{{ js_dialog_var }}" ).dialog('option',
@@ -78,4 +82,3 @@ $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
 
     ]]>
     </eval>
-

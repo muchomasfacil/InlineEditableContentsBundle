@@ -50,5 +50,29 @@ $(document).ready(function(){
         })
     ;
 
+    var $mmf_iec_menu = $('<div id="mmf-iec-div-menu" class="mmf-iec-menu"><button id="mmf-iec-button-cache-clear">{{ 'Cache clear' | trans( {}, 'iec' ) }}</button><button id="mmf-iec-button-logout">{{ 'Logout' | trans( {}, 'iec' ) }}</button></div>');
+    $('body').prepend($mmf_iec_menu);
+
+    $('#mmf-iec-button-cache-clear').button({
+        icons: {
+            primary: "ui-icon-gear",
+        }
+        })
+    .click(function() {
+        customJqueryAjaxLoad('{{ path('mmf_iec_cache_clear') }}');
+        });
+
+    $('#mmf-iec-button-logout').button({
+        icons: {
+            primary: "ui-icon-gear",
+        }
+        })
+    .click(function() {
+        if (confirm('{{ 'Are you sure?' | trans( {}, 'iec') }}')) document.location='{{ path('logout') }}';
+        });
+
+
+
+
 });//closes $(document).ready ...
 

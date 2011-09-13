@@ -307,4 +307,23 @@ class ContentController extends Controller
         return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'xml'), $this->render_vars);
     }
 
+    public function cacheClearAction()
+    {
+        $realCacheDir = $this->get('kernel')->getCacheDir();
+        $oldCacheDir  = $realCacheDir.'_old';
+
+        if (!is_writable($realCacheDir)) {
+            $alert = $this->get('translator')->trans('Unable to write in the cache directory', array(), 'iec'). ': '.$realCacheDir;
+        }
+        else {
+            rename($realCacheDir, $oldCacheDir);
+            $this->get('filesystem')->remove($oldCacheDir);
+            $alert = $this->get('translator')->trans('Cache deleted succesfully', array(), 'iec');
+        }
+
+        if (isset($alert)) $this->render_vars['alert'] = $alert;
+        return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'xml'), $this->render_vars);
+    }
+
 }
+

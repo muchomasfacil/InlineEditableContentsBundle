@@ -24,14 +24,19 @@ class DemoController extends Controller
                         //)
                     //'yml_editor_roles' =>
                     //'yml_admin_roles' =>
-                    //entity_class => "MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\Custom"
-                    //form_class => "MuchoMasFacil\InlineEditableContentsBundle\Form\Content\CustomType"
-                    //render_template => 'CustomBundle:customaController:custom.html.twig'
+                    //'entity_class' => "MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\Custom"
+                    //'form_class' => "MuchoMasFacil\InlineEditableContentsBundle\Form\Content\CustomType"
+                    //'render_template' => 'CustomBundle:customaController:custom.html.twig'
                     //'content' => array('hola', 'radiola') ó 'loquesea'
                     )
                 );//findOrCreateIfNotExist
         $contents['page-html'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('page-html', 'RichText', null);
 
+        $contents['img-img'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('img-img', 'PlainText', 1,
+            array(
+              'form_class' => "MuchoMasFacil\InlineEditableContentsBundle\Form\Content\FileType"
+            )
+        );
 
         return $this->render('MuchoMasFacilInlineEditableContentsBundle:Demo:index.html.twig', array('contents' => $contents));
     }
