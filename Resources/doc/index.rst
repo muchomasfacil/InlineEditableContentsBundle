@@ -20,6 +20,7 @@ TODO for the  InlineEditableWidgetsBundle
     - default values para content entity con cada tipo de content
     - configuraciones para ckeditor o file manager
 
+- fade menu jquery plugin
 - input de tipo file en formularios (las llamadas son ajax...) utilizar el form plugin de malsup...
 - custom yml validator... para los campos yml (usando callback contraint o un custom constraint)
 - custom form type ckeditor... ajax file upload... u otros...
@@ -91,4 +92,3 @@ render_params:
     'max_items'
 
 para cada widget, hacer un createDefaultContent, un getform y un render pudiendo sobreescribir los valores??
-

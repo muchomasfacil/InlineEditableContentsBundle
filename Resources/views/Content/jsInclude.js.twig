@@ -32,8 +32,8 @@ function customJqueryAjaxLoad(url, data, blockUI_target)
     else {
         settings = { data: data, type: 'GET'};
     }
-    customUnblock(blockUI_target);
     $.ajax(url, settings).fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, 'iec') }}: '+ textStatus )});
+    customUnblock(blockUI_target);
 }
 
 $(document).ready(function(){

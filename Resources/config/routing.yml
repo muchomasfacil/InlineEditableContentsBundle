@@ -1,6 +1,6 @@
 #makes use of a default firewall and login page from the symfony sandbox demo
-mmf_iec_demo_secured:
-    pattern:  /demo/secured/mmf_iec_demo
+mmf_iec_demo:
+    pattern:  /mmf_iec_demo
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Demo:index }
 
 #-------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ mmf_iec_index:
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:index}
 
 mmf_iec_js_include:
-    pattern:  /mmf_iec_js_include.{_format}
+    pattern:  /mmf_iec_js_include/{template_name}.{_format}
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:jsInclude, _format: js}
 
 mmf_iec_collection:
