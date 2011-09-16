@@ -25,10 +25,7 @@ $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
     //alert($(this).attr('data-mmf-iec-ckeditor'))
     delete CKEDITOR.instances[$(this).attr('id')];
     })
-    .ckeditor(function() {
-        //customConfig : '/custom/ckeditor_config.js' y esto una acción ...
-        //http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
-    });
+    .ckeditor(function() {}, { customConfig : '{{ path( 'mmf_iec_ckeditor_config', {'handler': content.handler}) }}/' + $(this).attr('id') });
 //file manager fields
 $('#{{form_id}} text[data-mmf-fm]').each(function(){
     alert($(this).attr('data-mmf-iec-ckeditor'))
@@ -39,41 +36,41 @@ $('#{{form_id}} text[data-mmf-fm]').each(function(){
     {
         buttons: {
 {% if (content.collectionLength == 1 and is_granted(content.getParsedAdminRoles())) %}
-          '{{ 'Advanced options' | trans({}, 'iec') }}': function () {
-              customJqueryAjaxLoad('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
+          '{{ 'Advanced options' | trans({}, (bundle_name | lower)) }}': function () {
+              mmf_iec_ajax('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
           },
 {% endif %}
 {% if content.collectionLength != 1 %}
-          '{{ 'List' | trans({}, 'iec') }}': function () {
-              customJqueryAjaxLoad('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
+          '{{ 'List' | trans({}, (bundle_name | lower)) }}': function () {
+              mmf_iec_ajax('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
           },
 {% endif %}
-          '{{ 'Save' | trans({}, 'iec') }}': function () {
+          '{{ 'Save' | trans({}, (bundle_name | lower)) }}': function () {
               $("#{{ form_id }}").submit(function(event) {
                   // stop form from submitting normally
                   event.preventDefault();
                   // Send the data
-                  customJqueryAjaxLoad('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
+                  mmf_iec_ajax('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
               });
               $("#{{ form_id }}").submit();
           },
 {% if content.collectionLength != 1 %}
-          '{{ 'Save and list' | trans({}, 'iec') }}': function () {
+          '{{ 'Save and list' | trans({}, (bundle_name | lower)) }}': function () {
               $("#{{ form_id }}").submit(function(event) {
                   // stop form from submitting normally
                   event.preventDefault();
                   // Send the data using post and put the results in a div
-                  customJqueryAjaxLoad('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order,  'action_if_success': 'list' }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
+                  mmf_iec_ajax('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order,  'action_if_success': 'list' }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
               });
               $("#{{ form_id }}").submit();
           },
 {% endif %}
-          '{{ 'Save and close' | trans({}, 'iec') }}': function () {
+          '{{ 'Save and close' | trans({}, (bundle_name | lower)) }}': function () {
               $("#{{ form_id }}").submit(function(event) {
                   // stop form from submitting normally
                   event.preventDefault();
                   // Send the data using post and put the results in a div
-                  customJqueryAjaxLoad('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order,  'action_if_success': 'close' }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
+                  mmf_iec_ajax('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order,  'action_if_success': 'close' }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
               });
               $("#{{ form_id }}").submit();
           }

@@ -25,22 +25,21 @@ class ContentController extends Controller
       return $this->render_vars['bundle_name'] . ':' . $this->render_vars['controller_name'] . ':' . $this->render_vars['action_name'] . '.'.$template_format.'.twig';
     }
 
+    private function trans($translatable, $params = array())
+    {
+      return $this->get('translator')->trans($translatable, $params, strtolower($this->render_vars['bundle_name']));
+    }
+
     private function getContentByHandler($handler)
     {
         $em = $this->get('doctrine')->getEntityManager();
         $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
         if (!$content) {
-            throw $this->createNotFoundException($this->get('translator')->trans('No content afound for handler', array(), 'iec'). ' '.$handler);
+            throw $this->createNotFoundException($this->trans('No content afound for handler'). ' '.$handler);
         }
 
         return $content;
     }
-
-    public function jsIncludeAction()
-    {
-        return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'js'), $this->render_vars);
-    }
-
 
     public function indexAction($handler, $content_container_id)
     {
@@ -119,7 +118,7 @@ class ContentController extends Controller
         $em->persist($content);
         $em->flush();
 
-        $flash_messages[] = array('highlight' => $this->get('translator')->trans('The entry was moved successfully', array(), 'iec'));
+        $flash_messages[] = array('highlight' => $this->trans('The entry was moved successfully'));
 
         if (isset($flash_messages)) $this->render_vars['flash_messages'] = $flash_messages;
         $this->render_vars['content_container_id'] = $content_container_id;
@@ -140,7 +139,7 @@ class ContentController extends Controller
         {
             $content_content = $content->getContent();
             if ((!is_null($content->getCollectionLength())) && (count($content_content) >= $content->getCollectionLength())) {
-                $flash_messages[] = array('error' => $this->get('translator')->trans('Overpassed maximum number of items for this content', array(), 'iec'). ': '.$content->getCollectionLength());
+                $flash_messages[] = array('error' => $this->trans('Overpassed maximum number of items for this content'). ': '.$content->getCollectionLength());
                 $reload_container = false;
             }
             else{
@@ -160,11 +159,11 @@ class ContentController extends Controller
                 $em = $this->get('doctrine')->getEntityManager();
                 $em->persist($content);
                 $em->flush();
-                $flash_messages[] = array('highlight' => $this->get('translator')->trans('The new entry was created successfully', array(), 'iec'));
+                $flash_messages[] = array('highlight' => $this->trans('The new entry was created successfully'));
             }
         }
         catch (Exception $e){
-            $flash_messages[] = array('error' => $this->get('translator')->trans('There was a problem creating the new entry', array(), 'iec'));
+            $flash_messages[] = array('error' => $this->trans('There was a problem creating the new entry'));
             $reload_container = false;
         }
 
@@ -190,18 +189,18 @@ class ContentController extends Controller
             if (isset($content_content[$content_order])){
                 unset($content_content[$content_order]);
                 $content->setContent(array_values($content_content));
-                $flash_messages[] = array('highlight' => $this->get('translator')->trans('The entry was deleted successfully', array(), 'iec'));
+                $flash_messages[] = array('highlight' => $this->trans('The entry was deleted successfully'));
                 $reload_container = true;
             }
             else{
-                $flash_messages[] = array('error' => $this->get('translator')->trans('The entry did not exist. Nothing deleted', array(), 'iec'));
+                $flash_messages[] = array('error' => $this->trans('The entry did not exist. Nothing deleted'));
                 $reload_container = false;
             }
         }
 
         if ($content_order == 'all'){
             $content->setContent(null);
-            $flash_messages[] = array('highlight' => $this->get('translator')->trans('All entries were deleted successfully', array(), 'iec'));
+            $flash_messages[] = array('highlight' => $this->trans('All entries were deleted successfully'));
             $reload_container = true;
         }
         $em = $this->get('doctrine')->getEntityManager();
@@ -248,11 +247,11 @@ class ContentController extends Controller
                 $em->persist($content);
                 $em->flush();
 
-                $flash_messages[] = array('highlight' => $this->get('translator')->trans('The entry was saved successfully', array(), 'iec'));
+                $flash_messages[] = array('highlight' => $this->trans('The entry was saved successfully'));
                 $reload_container = true;
             }
             else{
-                $flash_messages[] = array('error' => $this->get('translator')->trans('Correct form data', array(), 'iec'));
+                $flash_messages[] = array('error' => $this->trans('Correct form data'));
                 $action_if_success = false;
             }
         }
@@ -287,11 +286,11 @@ class ContentController extends Controller
                 $em->persist($content);
                 $em->flush();
 
-                $flash_messages[] = array('highlight' => $this->get('translator')->trans('The entry was saved successfully', array(), 'iec'));
+                $flash_messages[] = array('highlight' => $this->trans('The entry was saved successfully'));
                 $reload_container = true;
             }
             else{
-                $flash_messages[] = array('error' => $this->get('translator')->trans('Correct form data', array(), 'iec'));
+                $flash_messages[] = array('error' => $this->trans('Correct form data'));
                 $action_if_success = false;
             }
         }
@@ -307,18 +306,48 @@ class ContentController extends Controller
         return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'xml'), $this->render_vars);
     }
 
+    public function ckeditorConfigAction($handler, $input_id)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+        $ckeditor_options = $this->container->getParameter('mucho_mas_facil_inline_editable_contents.ckeditor_options');
+        //die(print_r($ckeditor_options));
+        $ckeditor_config = $ckeditor_options['default'];
+        if ($content) {
+            $params = $content->getParsedParams();
+            if ((isset($params['ckeditor_load_option'])) && (isset($ckeditor_options[$params['ckeditor_load_option']]))){
+                $ckeditor_config = $ckeditor_options[$params['ckeditor_load_option']];
+            }
+        }
+        if(class_exists('MuchoMasFacil\FileManagerBundle\Util\CustomUrlSafeEncoder')) {
+            $url_safe_encoder = new \MuchoMasFacil\FileManagerBundle\Util\CustomUrlSafeEncoder();
+            $ckeditor_config .= "
+            config.filebrowserBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('load_options' => 'collection_any_file')) )) ."';
+            config.filebrowserImageBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('load_options' => 'collection_image')) )) ."';
+            config.filebrowserFlashBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('load_options' => 'collection_swf')) )) ."';
+            //config.filebrowserUploadUrl = '';
+            //config.filebrowserImageUploadUrl = '';
+            //config.filebrowserFlashUploadUrl = '';
+            //config.filebrowserImageWindowWidth = '640';
+            //config.filebrowserImageWindowHeight = '480';
+            ";
+        }
+        $this->render_vars['ckeditor_config'] = $ckeditor_config;
+        return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'js'), $this->render_vars);
+    }
+
     public function cacheClearAction()
     {
         $realCacheDir = $this->get('kernel')->getCacheDir();
         $oldCacheDir  = $realCacheDir.'_old';
 
         if (!is_writable($realCacheDir)) {
-            $alert = $this->get('translator')->trans('Unable to write in the cache directory', array(), 'iec'). ': '.$realCacheDir;
+            $alert = $this->trans('Unable to write in the cache directory'). ': '.$realCacheDir;
         }
         else {
             rename($realCacheDir, $oldCacheDir);
             $this->get('filesystem')->remove($oldCacheDir);
-            $alert = $this->get('translator')->trans('Cache deleted succesfully', array(), 'iec');
+            $alert = $this->trans('Cache deleted succesfully');
         }
 
         if (isset($alert)) $this->render_vars['alert'] = $alert;

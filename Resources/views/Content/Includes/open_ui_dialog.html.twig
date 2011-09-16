@@ -5,7 +5,7 @@ if( typeof( ${{ js_dialog_var }} ) == 'undefined' )
     var ${{ js_dialog_var }} = $('<div id="{{ js_dialog_var }}"></div>')
         .dialog({
             autoOpen: false,
-            title: '{{ 'Editing content with handler'  | trans({}, 'iec') }} "{{ content.handler }}"',
+            title: '{{ 'Editing content with handler'  | trans({}, (bundle_name | lower)) }} "{{ content.handler }}"',
             width: Math.min(800,$(window).width()*90/100),
             height: Math.min(600,$(window).height()*90/100),
             modal: true, //if not it would be possible to be input files with same id (entity_name_field)
@@ -23,4 +23,3 @@ if (!${{ js_dialog_var }}.dialog('isOpen'))
 
     ]]>
     </eval>
-

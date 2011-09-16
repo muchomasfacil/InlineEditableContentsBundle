@@ -13,7 +13,7 @@
 {% include bundle_name ~ ':' ~ controller_name ~ ':Includes/flash.html.twig' %}
 <div class="div-highlight ui-state-highlight ui-corner-all mmf-iec-div-flash">
     <span class="ui-icon ui-icon-info"></span>
-    {{ 'Only edit here if you know what you are doing' | trans({}, 'iec') }}
+    {{ 'Only edit here if you know what you are doing' | trans({}, (bundle_name | lower)) }}
 </div>
 
 <form id="{{ form_id }}" method="post" {{ form_enctype(form) }}>
@@ -28,15 +28,15 @@
     $( "#{{ js_dialog_var }}" ).dialog('option',
     {
         buttons: {
-          '{{ 'Volver' | trans({}, 'iec') }}': function () {
-              customJqueryAjaxLoad('{{ path( 'mmf_iec_index', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
+          '{{ 'Volver' | trans({}, (bundle_name | lower)) }}': function () {
+              mmf_iec_ajax('{{ path( 'mmf_iec_index', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
           },
-          '{{ 'Save' | trans({}, 'iec') }}': function () {
+          '{{ 'Save' | trans({}, (bundle_name | lower)) }}': function () {
               $("#{{ form_id }}").submit(function(event) {
                   // stop form from submitting normally
                   event.preventDefault();
                   // Send the data
-                  customJqueryAjaxLoad('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
+                  mmf_iec_ajax('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
               });
               $("#{{ form_id }}").submit();
           }
@@ -50,4 +50,3 @@
 
 
 </taconite>
-

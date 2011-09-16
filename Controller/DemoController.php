@@ -37,6 +37,20 @@ class DemoController extends Controller
               'form_class' => "MuchoMasFacil\InlineEditableContentsBundle\Form\Content\FileType"
             )
         );
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('another-html');
+        if ($content) {
+            $em->remove($content);
+            $em->flush();
+        }
+        $contents['another-html'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('another-html', 'RichText', 1, array(
+            'yml_params' => '
+ckeditor_load_option: custom
+ckeditor_custom_string: |
+    //esto es la prueba
+    '
+        )
+    );
+
 
         return $this->render('MuchoMasFacilInlineEditableContentsBundle:Demo:index.html.twig', array('contents' => $contents));
     }

@@ -1,0 +1,94 @@
+//makes use of jquery.blockUI.js
+function mmf_iec_block(settings, blockUI_target)
+{
+    if(blockUI_target){
+        $(blockUI_target).block(settings);
+    }
+    else{
+        $.blockUI(settings);
+    }
+}
+
+//makes use of jquery.blockUI.js
+function mmf_iec_unblock(blockUI_target)
+{
+    if(blockUI_target){
+        $(blockUI_target).unblock();
+    }
+    else{
+        $.unblockUI();
+    }
+}
+
+function mmf_iec_load(load_target, url, data)
+{
+    mmf_iec_block({
+            message: '<p><img width="10px" src="{{ asset('bundles/muchomasfacilinlineeditablecontents/images/busy.gif') }}" /> {{ 'Loading' | trans({}, (bundle_name | lower)) }}...</p>',
+            css: { backgroundColor: '#fff', font: '10px bold Arial, Helvetica, sans-serif' },
+            overlayCSS: {backgroundColor: '#555'}
+    }, load_target);
+
+    $(load_target).load( url, data, function(responseText, textStatus, XMLHttpRequest) {
+        if (textStatus == "error") {
+            alert('{{ 'Error making an Ajax call' |  trans({}, (bundle_name | lower)) }}'+ ': '+ XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
+        }
+    });
+
+    mmf_iec_unblock(load_target);
+}
+
+function mmf_iec_ajax(url, data, blockUI_target)
+{
+    mmf_iec_block({
+            message: '<p><img width="10px" src="{{ asset('bundles/muchomasfacilinlineeditablecontents/images/busy.gif') }}" /> {{ 'Loading' | trans({}, (bundle_name | lower)) }}...</p>',
+            css: { backgroundColor: '#fff', font: '10px bold Arial, Helvetica, sans-serif' },
+            overlayCSS: {backgroundColor: '#555'}
+        }, blockUI_target);
+    if (data){
+        settings = { data: data, type: 'POST'};
+    }
+    else {
+        settings = { data: data, type: 'GET'};
+    }
+    $.ajax(url, settings).fail(function (jqXHR, textStatus, errorThrown) {alert('{{ 'Error making an ajax call' | trans({}, (bundle_name | lower)) }}: '+ textStatus )});
+    mmf_iec_unblock(blockUI_target);
+}
+
+$(document).ready(function(){
+
+    $('[data-mmf-iec-editable-url]')
+        .addClass('mmf-iec-editable')
+        .hover(
+            function () {$(this).addClass('mmf-iec-editable-hover');}
+            ,function () {$(this).removeClass('mmf-iec-editable-hover');}
+        )//closes hover
+        .dblclick(function(){
+            mmf_iec_ajax($(this).attr('data-mmf-iec-editable-url'), undefined , '#' + $(this).attr('id'));
+            //alert($(this).attr('id'))
+        })
+    ;
+
+    var $mmf_iec_menu = $('<div id="mmf-iec-div-menu" class="mmf-iec-menu"><button id="mmf-iec-button-cache-clear">{{ 'Cache clear' | trans( {}, (bundle_name | lower) ) }}</button><button id="mmf-iec-button-logout">{{ 'Logout' | trans( {}, (bundle_name | lower) ) }}</button></div>');
+    $('body').prepend($mmf_iec_menu);
+
+    $('#mmf-iec-button-cache-clear').button({
+        icons: {
+            primary: "ui-icon-gear",
+        }
+        })
+    .click(function() {
+        mmf_iec_ajax('{{ path('mmf_iec_cache_clear') }}');
+        });
+
+    $('#mmf-iec-button-logout').button({
+        icons: {primary: "ui-icon-gear"}
+        })
+    .click(function() {
+        if (confirm('{{ 'Are you sure?' | trans( {}, (bundle_name | lower)) }}')) document.location='{{ path('logout') }}';
+        });
+
+
+
+
+});//closes $(document).ready ...
+

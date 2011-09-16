@@ -21,7 +21,6 @@ class ContentRepository extends EntityRepository
             $content = new Content();
             //set handler
             $content->setHandler($handler);
-
             //set yml_params
             if (isset($default['yml_params'])) {
                 $content->setYmlParams($default['yml_params']);
@@ -101,3 +100,4 @@ class ContentRepository extends EntityRepository
 
 
 }
+

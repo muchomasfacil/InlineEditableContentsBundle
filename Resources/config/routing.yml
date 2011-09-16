@@ -13,9 +13,9 @@ mmf_iec_index:
     pattern:  /mmf_iec_index/{handler}/{content_container_id}
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:index}
 
-mmf_iec_js_include:
-    pattern:  /mmf_iec_js_include/{template_name}.{_format}
-    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:jsInclude, _format: js}
+mmf_iec_static:
+    pattern:  /mmf_iec_static/{template}.{_format}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Static:render}
 
 mmf_iec_collection:
     pattern:  /mmf_iec_collection_list/{handler}/{content_container_id}/{reload_container}
@@ -44,4 +44,8 @@ mmf_iec_delete:
 mmf_iec_cache_clear:
     pattern:  /mmf_iec_cache_clear
     defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:cacheClear}
+
+mmf_iec_ckeditor_config:
+    pattern:  /mmf_iec_ckeditor_config.js/{handler}/{input_id}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:ckeditorConfig, _format: 'js', handler: '', input_id: ''}
 

@@ -16,10 +16,18 @@
         <script type="text/javascript" src="{{ asset('js/malsup/jquery.taconite.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/ckeditor/ckeditor.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/ckeditor/adapters/jquery.js') }}"></script>
+        <script src="{{ path('mmf_iec_static', {'template': 'mmf_iec', '_format': 'js'}) }}" type="text/javascript"></script>
+        <script type="text/javascript">
+        $.taconite.debug = true;
+        </script>
+
 {% endblock %}
     </head>
     <body>
-        <p>{{ 'logged in as' | trans( {}, 'iec') }} <strong>{{ app.user ? app.user.username : 'Anonymous' }}</strong> - <a href="{{ path('_demo_logout') }}"> {{ 'logout' | trans( {}, 'iec') }}</a></p>
+
+    {{ 'logged in as' | trans( {}, ('MuchoMasFacilInlineEditableContentsBundle' | lower)) }}
+
+        <p>{{ 'logged in as' | trans( {}, ('MuchoMasFacilInlineEditableContentsBundle' | lower)) }} <strong>{{ app.user ? app.user.username : 'Anonymous' }}</strong> - <a href="{{ path('_demo_logout') }}"> {{ 'logout' | trans( {}, ('MuchoMasFacilInlineEditableContentsBundle' | lower)) }}</a></p>
 
         {% block body %}{% endblock %}
     </body>

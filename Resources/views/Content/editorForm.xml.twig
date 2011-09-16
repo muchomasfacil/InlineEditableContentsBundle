@@ -13,7 +13,7 @@
 {% elseif action_if_success == 'list' %}
 
                     <eval><![CDATA[
-                customJqueryAjaxLoad('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
+                mmf_iec_ajax('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
                     ]]>
                     </eval>
 
@@ -29,4 +29,3 @@
 
 {% endif %}
 </taconite>
-

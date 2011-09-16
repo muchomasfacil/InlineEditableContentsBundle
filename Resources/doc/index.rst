@@ -1,19 +1,10 @@
 TODO for the  InlineEditableWidgetsBundle
 =========================================
-- bug, añade un <div> al hacer un replacecontent...
-    // add 'replace' and 'replaceContent' plugins (conditionally)
-    $.fn.replace = $.fn.replace || function(a) {
-        this.after(a);
-        this.remove();
-    };
-    $.fn.replaceContent = $.fn.replaceContent || function(a) {
-        return this.empty().append(a);
-    };
 
 - completar ckeditor con ckfinder o el file manager...
 - añadir opción de imágenes/ficheros al ckeditor
 - testar correcto funcionamiento del collection_length
-
+- coger la configuración del mmf.yml... en el extension...
 
 - CONFIGURACIONES DEL BUNDLE:
     - algo de css o js?
