@@ -45,7 +45,7 @@ class DemoController extends Controller
         $contents['another-html'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('another-html', 'RichText', 1, array(
             'yml_params' => '
 ckeditor_load_option: custom
-ckeditor_custom_string: |
+ckeditor_custom_options: |
     //esto es la prueba
     '
         )

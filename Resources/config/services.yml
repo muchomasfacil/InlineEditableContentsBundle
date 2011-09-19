@@ -1,11 +1,5 @@
 parameters:
     mucho_mas_facil_inline_editable_contents.ckeditor_options:
-        full: |
-
-            config.toolbar = 'Full';
-        basic: |
-
-            config.toolbar = 'Basic';
         default: |
 
             config.toolbar = 'Default';
@@ -13,6 +7,12 @@ parameters:
             [
                 ['Bold', 'Italic', 'Underline', '-', 'Link', 'Unlink','-','About']
             ];
+        full: |
+
+            config.toolbar = 'Full';
+        basic: |
+
+            config.toolbar = 'Basic';
         custom: |
 
             config.toolbar = 'Custom';

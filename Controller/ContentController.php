@@ -314,24 +314,28 @@ class ContentController extends Controller
         //die(print_r($ckeditor_options));
         $ckeditor_config = $ckeditor_options['default'];
         if ($content) {
-            $params = $content->getParsedParams();
-            if ((isset($params['ckeditor_load_option'])) && (isset($ckeditor_options[$params['ckeditor_load_option']]))){
-                $ckeditor_config = $ckeditor_options[$params['ckeditor_load_option']];
+            $content_params = $content->getParsedParams();
+            if ((isset($content_params['ckeditor_load_option'])) && (isset($ckeditor_options[$content_params['ckeditor_load_option']]))){
+                $ckeditor_config = $ckeditor_options[$content_params['ckeditor_load_option']];
             }
         }
+
         if(class_exists('MuchoMasFacil\FileManagerBundle\Util\CustomUrlSafeEncoder')) {
             $url_safe_encoder = new \MuchoMasFacil\FileManagerBundle\Util\CustomUrlSafeEncoder();
             $ckeditor_config .= "
-            config.filebrowserBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('load_options' => 'collection_any_file')) )) ."';
-            config.filebrowserImageBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('load_options' => 'collection_image')) )) ."';
-            config.filebrowserFlashBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('load_options' => 'collection_swf')) )) ."';
+            config.filebrowserBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('upload_path_after_document_root'=> '/uploads/'.$content->getHandler().'/files/', 'load_options' => 'collection_any_file')) )) ."';
+            config.filebrowserImageBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('upload_path_after_document_root'=> '/uploads/'.$content->getHandler().'/images/', 'load_options' => 'collection_image')) )) ."';
+            config.filebrowserFlashBrowseUrl = '". $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode(array('upload_path_after_document_root'=> '/uploads/'.$content->getHandler().'/swf/', 'load_options' => 'collection_swf')) )) ."';
             //config.filebrowserUploadUrl = '';
             //config.filebrowserImageUploadUrl = '';
             //config.filebrowserFlashUploadUrl = '';
-            //config.filebrowserImageWindowWidth = '640';
-            //config.filebrowserImageWindowHeight = '480';
+            config.filebrowserWindowWidth = '700';
+            config.filebrowserWindowHeight = '480';
             ";
         }
+        if (isset($content_params['ckeditor_custom_options'])){
+                $ckeditor_config .= $content_params['ckeditor_custom_options'];
+            }
         $this->render_vars['ckeditor_config'] = $ckeditor_config;
         return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'js'), $this->render_vars);
     }
