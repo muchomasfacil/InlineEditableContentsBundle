@@ -58,10 +58,10 @@ $(document).ready(function(){
 
     $('[data-mmf-iec-editable-url]')
         .addClass('mmf-iec-editable')
-        .hover(
-            function () {$(this).addClass('mmf-iec-editable-hover');}
-            ,function () {$(this).removeClass('mmf-iec-editable-hover');}
-        )//closes hover
+        //.hover(
+            //function () {$(this).addClass('mmf-iec-editable-hover');}
+            //,function () {$(this).removeClass('mmf-iec-editable-hover');}
+        //)//closes hover
         .dblclick(function(){
             mmf_iec_ajax($(this).attr('data-mmf-iec-editable-url'), undefined , '#' + $(this).attr('id'));
             //alert($(this).attr('id'))

@@ -1,5 +1,5 @@
 .mmf-iec-editable { border-top : 1px dashed black; border-bottom : 1px dashed black;  min-width: 50px;  min-height: 20px; cursor: crosshair }
-.mmf-iec-editable-hover {border-top : 1px solid black; border-bottom : 1px solid black; background-color: #eee; }
+.mmf-iec-editable:hover {border-top : 1px solid black; border-bottom : 1px solid black; background-color: #eee; }
 
 .mmf-iec-button-move
 , .mmf-iec-button-delete
