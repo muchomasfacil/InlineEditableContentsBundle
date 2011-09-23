@@ -329,8 +329,8 @@ class ContentController extends Controller
             //config.filebrowserUploadUrl = '';
             //config.filebrowserImageUploadUrl = '';
             //config.filebrowserFlashUploadUrl = '';
-            config.filebrowserWindowWidth = '700';
-            config.filebrowserWindowHeight = '480';
+            //config.filebrowserWindowWidth = '700px';
+            //config.filebrowserWindowHeight = '480px';
             ";
         }
         if (isset($content_params['ckeditor_custom_options'])){
@@ -359,4 +359,3 @@ class ContentController extends Controller
     }
 
 }
-

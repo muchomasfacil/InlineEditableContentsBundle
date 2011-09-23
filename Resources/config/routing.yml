@@ -47,5 +47,5 @@ mmf_iec_cache_clear:
 
 mmf_iec_ckeditor_config:
     pattern:  /mmf_iec_ckeditor_config.js/{handler}/{input_id}
-    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:ckeditorConfig, _format: 'js', handler: '', input_id: ''}
+    defaults: { _controller: MuchoMasFacilInlineEditableContentsBundle:Content:ckeditorConfig, _format: js, handler: '', input_id: ''}
 
