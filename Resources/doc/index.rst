@@ -1,10 +1,7 @@
 TODO for the  InlineEditableWidgetsBundle
 =========================================
 
-- completar ckeditor con ckfinder o el file manager...
 - añadir opción de imágenes/ficheros al ckeditor
-- testar correcto funcionamiento del collection_length
-- coger la configuración del mmf.yml... en el extension...
 
 - CONFIGURACIONES DEL BUNDLE:
     - algo de css o js?
@@ -68,18 +65,3 @@ forms: possible render templates (first is default) option of applying callbacks
   wysiwyg_list: raw ul ol faq
   file_list: image escaped image_ul image_ol jq_cycle  jq_hoverpulse  jq_colorbox
 
-escaped, raw
-
-form_params:
-    'max_file_size'
-    'thumbnail' thumb: { 'targetMime': 'image/gif', 'maxWidth': 300, 'maxHeight': 300, 'scale': true, 'inflate': true, 'quality': 75 }
-    'allowed_mime_types'
-    'max_items'
-
-render_params:
-    'apply_raw'
-    'template_to_render'
-    'jq_string'
-    'max_items'
-
-para cada widget, hacer un createDefaultContent, un getform y un render pudiendo sobreescribir los valores??

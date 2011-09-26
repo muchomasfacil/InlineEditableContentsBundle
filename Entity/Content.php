@@ -257,4 +257,29 @@ class Content
     {
         return $this->content;
     }
+    /**
+     * @var string $form_template
+     */
+    private $form_template;
+
+
+    /**
+     * Set form_template
+     *
+     * @param string $formTemplate
+     */
+    public function setFormTemplate($formTemplate)
+    {
+        $this->form_template = $formTemplate;
+    }
+
+    /**
+     * Get form_template
+     *
+     * @return string 
+     */
+    public function getFormTemplate()
+    {
+        return $this->form_template;
+    }
 }

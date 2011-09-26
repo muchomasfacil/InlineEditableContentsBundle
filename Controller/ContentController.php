@@ -40,7 +40,8 @@ class ContentController extends Controller
 
         return $content;
     }
-
+//------------------------------------------------------------------------------
+//actions from here on
     public function indexAction($handler, $content_container_id)
     {
         $content = $this->getContentByHandler($handler);

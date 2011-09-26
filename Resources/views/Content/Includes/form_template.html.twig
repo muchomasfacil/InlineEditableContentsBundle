@@ -1,8 +1,7 @@
     <replaceContent select="#{{ js_dialog_var }}"><![CDATA[
 
-{% set form_id = js_dialog_var ~ '_form' %}
-
 {% include bundle_name ~ ':' ~ controller_name ~ ':Includes/flash.html.twig' %}
+
 <form id="{{ form_id }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
 </form>
@@ -12,7 +11,6 @@
 
     <eval><![CDATA[
 
-//TODO HAY QUE CAMBIARLO PARA QUE QUITE LAS INSTANCIAS EN ESTE DIALOG SÓLAMENTE
 //delete possible ckeditor instances
 //if (typeof(CKEDITOR) == 'object'){
 //  for ( x in CKEDITOR.instances){
@@ -20,62 +18,19 @@
 //   delete CKEDITOR.instances[x];
 //  }
 //}
+
 //ckeditor fields
 $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
     //alert($(this).attr('data-mmf-iec-ckeditor'))
     delete CKEDITOR.instances[$(this).attr('id')];
     })
     .ckeditor(function() {}, { customConfig : '{{ path( 'mmf_iec_ckeditor_config', {'handler': content.handler}) }}/' + $(this).attr('id') });
+
 //file manager fields
+// TODO
 $('#{{form_id}} text[data-mmf-fm]').each(function(){
-    alert($(this).attr('data-mmf-iec-ckeditor'))
+    alert($(this).attr('data-mmf-fm'))
     });
-
-
-    $( "#{{ js_dialog_var }}" ).dialog('option',
-    {
-        buttons: {
-{% if (content.collectionLength == 1 and is_granted(content.getParsedAdminRoles())) %}
-          '{{ 'Advanced options' | trans({}, (bundle_name | lower)) }}': function () {
-              mmf_iec_ajax('{{ path( 'mmf_iec_admin_form', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
-          },
-{% endif %}
-{% if content.collectionLength != 1 %}
-          '{{ 'List' | trans({}, (bundle_name | lower)) }}': function () {
-              mmf_iec_ajax('{{ path( 'mmf_iec_collection', { 'handler': content.handler,  'content_container_id': content_container_id, }) }}', undefined, '#{{ js_dialog_var }}');
-          },
-{% endif %}
-          '{{ 'Save' | trans({}, (bundle_name | lower)) }}': function () {
-              $("#{{ form_id }}").submit(function(event) {
-                  // stop form from submitting normally
-                  event.preventDefault();
-                  // Send the data
-                  mmf_iec_ajax('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
-              });
-              $("#{{ form_id }}").submit();
-          },
-{% if content.collectionLength != 1 %}
-          '{{ 'Save and list' | trans({}, (bundle_name | lower)) }}': function () {
-              $("#{{ form_id }}").submit(function(event) {
-                  // stop form from submitting normally
-                  event.preventDefault();
-                  // Send the data using post and put the results in a div
-                  mmf_iec_ajax('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order,  'action_if_success': 'list' }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
-              });
-              $("#{{ form_id }}").submit();
-          },
-{% endif %}
-          '{{ 'Save and close' | trans({}, (bundle_name | lower)) }}': function () {
-              $("#{{ form_id }}").submit(function(event) {
-                  // stop form from submitting normally
-                  event.preventDefault();
-                  // Send the data using post and put the results in a div
-                  mmf_iec_ajax('{{ path( 'mmf_iec_editor_form', { 'handler': content.handler,  'content_container_id': content_container_id, 'content_order': content_order,  'action_if_success': 'close' }) }}', $("#{{ form_id }}").serializeArray(), '#{{ js_dialog_var }}');
-              });
-              $("#{{ form_id }}").submit();
-          }
-        }//buttons
-    }).dialog('open');
 
     ]]>
     </eval>

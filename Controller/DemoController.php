@@ -15,6 +15,7 @@ class DemoController extends Controller
         }*/
 
         $em = $this->get('doctrine')->getEntityManager();
+        //$this->container, pasarlo a findOrCreateIfNotExist
         $contents['page-h1'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('page-h1', 'PlainText', 1,
                 array(
                     //'yml_params' => array(
@@ -67,4 +68,3 @@ ckeditor_custom_options: |
     }
 
 }
-

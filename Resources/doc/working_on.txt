@@ -1,0 +1,22 @@
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Better ContentEntity design:
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+Global
+- content
+- collection_length
+- entity_class
+- yml_params
+
+form
+- yml_editor_roles  (quitar que sea yml)
+- yml_admin_roles   (quitar que sea yml)
+- form_class
+- form_template
+
+render
+- render_template
+
+
+que findOrCreateIfNotExist coja parametro para lorenimpsum, pasar container y lo utilice
+

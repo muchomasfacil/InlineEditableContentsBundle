@@ -5,6 +5,7 @@
         <title>MuchoMasFacilInlineEditableWidgetsBundle Demo</title>
 {% block stylesheets %}
         <link type="text/css" href="{{ asset('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('js/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css') }}" id="theme">
         <link type="text/css" href="{{ asset('bundles/muchomasfacilinlineeditablecontents/css/mmf_iec.css') }}" rel="stylesheet" />
 {% endblock %}
 {% block javascripts %}
@@ -16,6 +17,9 @@
         <script type="text/javascript" src="{{ asset('js/malsup/jquery.taconite.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/ckeditor/ckeditor.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/ckeditor/adapters/jquery.js') }}"></script>
+        <script src="{{ asset('js/plupload/plupload.full.js') }}"></script>
+        <script src="{{ asset('js/plupload/jquery.ui.plupload/jquery.ui.plupload.js') }}"></script>
+        <script src="{{ asset('js/plupload/i18n/' ~ app.getSession().getLocale() ~ '.js') }}"></script>
         <script src="{{ path('mmf_iec_static', {'template': 'mmf_iec', '_format': 'js'}) }}" type="text/javascript"></script>
         <script type="text/javascript">
         $.taconite.debug = true;

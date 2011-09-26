@@ -15,8 +15,9 @@ MuchoMasFacil\InlineEditableContentsBundle\Entity\Content:
         yml_admin_roles: {type: text}
         entity_class: {type: string, length: 255}
         form_class: {type: string, length: 255}
-        collection_length: {type: integer, nullable: true}
         render_template: {type: string, length: 255}
+        form_template: {type: string, length: 255}
+        collection_length: {type: integer, nullable: true}
         content: {type: array, nullable: true}
     lifecycleCallbacks: {}
         #prePersist: [ doStuffOnPrePersist, doOtherStuffOnPrePersistToo ]

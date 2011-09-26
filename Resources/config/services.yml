@@ -1,4 +1,48 @@
 parameters:
+    mucho_mas_facil_inline_editable_contents.widgets:
+        default:
+            yml_params: '{}'
+            yml_editor_roles: '[ROLE_USER]'
+            yml_admin_roles: '[ROLE_ADMIN]'
+            entity_class: MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\PlainText
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\PlainTextType
+            render_template: 'MuchoMasFacilInlineEditableContentsBundle:ContentController:render.html.twig'
+            form_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Includes/form_template.html.twig'
+
+        single_line_plain_text: ~ #same as default
+
+        multiline_plain_text:
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\TextareaType
+
+        rich_text:
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\TextareaType
+
+        custom_rich_text:
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\TextareaType
+            yml_params: |
+                |
+                ckeditor_load_option: custom
+                ckeditor_custom_options: |
+                //esto es la prueba
+
+        single_line_plain_text_header_and_rich_text:
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\SingleLinePlainTextHeaderAndRichTextType
+
+        single_line_plain_text_header_and_custom_rich_text:
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\SingleLinePlainTextHeaderAndCustomRichTextType
+
+        rich_text_and_custom_rich_text:
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\RichTextAndCustomRichTextType
+
+        external_widgets:
+            # facebook for websites http://developers.facebook.com/docs/guides/web/#plugins
+            # twitter
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\RichTextAndCustomRichTextType
+
+        image: ~ #image_url, posible title or text, posible link
+
+        #advanced_image: ~ #this are just calls to FileManagerBundle
+
     mucho_mas_facil_inline_editable_contents.ckeditor_options:
         default: |
 
@@ -7,12 +51,18 @@ parameters:
             [
                 ['Bold', 'Italic', 'Underline', '-', 'Link', 'Unlink','-','About']
             ];
+
+
         full: |
 
             config.toolbar = 'Full';
+
+
         basic: |
 
             config.toolbar = 'Basic';
+
+
         custom: |
 
             config.toolbar = 'Custom';

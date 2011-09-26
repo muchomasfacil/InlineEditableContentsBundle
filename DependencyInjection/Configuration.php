@@ -4,6 +4,7 @@ namespace MuchoMasFacil\InlineEditableContentsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -20,9 +21,33 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('mucho_mas_facil_inline_editable_contents');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('widgets')
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('yml_params')->end()
+                        ->scalarNode('yml_editor_roles')->end()
+                        ->scalarNode('yml_admin_roles')->end()
+                        ->scalarNode('entity_class')->end()
+                        ->scalarNode('form_class')->end()
+                        ->scalarNode('render_template')->end()
+                        ->scalarNode('form_template')->end()
+                    ->end()
+                ->end()
+            ->end()
+
+        ;
+
+        $rootNode
+            ->children()
+                ->arrayNode('ckeditor_options')
+                ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
