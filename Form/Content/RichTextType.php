@@ -13,7 +13,7 @@ class RichTextType extends AbstractType
     {
         $builder
             ->add('content', 'textarea', array(
-              'attr' => array('data-mmf-iec-ckeditor'=> 'default')
+              'attr' => array('data-mmf-iec-ckeditor'=> 'true')
             ));
     }
 

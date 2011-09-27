@@ -4,7 +4,7 @@ namespace MuchoMasFacil\InlineEditableContentsBundle\Entity\Content;
 
 use MuchoMasFacil\InlineEditableContentsBundle\Util\LoremIpsumGenerator;
 
-class RichText
+class MultiLinePlainText
 {
 
     private $content;
@@ -22,17 +22,17 @@ class RichText
     public function getLoremIpsum($count = 1, $number_of_words_to_lorem_ipssum = null)
     {
         $return = array();
-        $lorem_ipsum = new LoremIpsumGenerator(10); //words per paragraph
+        $lorem_ipsum = new LoremIpsumGenerator();
         if ((!is_int($count)) || ($count < 0)) {
             $count = 1;
         }
         if ((!is_int($number_of_words_to_lorem_ipssum)) || ($number_of_words_to_lorem_ipssum < 0)) {
-             $number_of_words_to_lorem_ipssum = rand(1, 10);
+            $number_of_words_to_lorem_ipssum = rand(20, 40);
         }
         for ($i = 0; $i < $count; $i++)
         {
             $entry = new self;
-            $entry->setContent(trim($lorem_ipsum->getContent($number_of_words_to_lorem_ipssum))); //html by default
+            $entry->setContent(trim($lorem_ipsum->getContent($number_of_words_to_lorem_ipssum, 'txt')));
             $return[] = $entry;
         }
         return $return;
@@ -41,7 +41,8 @@ class RichText
     public function __toString()
     {
         $cut_in = 60;
-        $content = strip_tags($this->content);
-        return (strlen($content) > $cut_in) ? substr($content, 0, $cut_in).'...' : $content ;
+        return (strlen($this->content) > $cut_in) ? substr($this->content, 0, $cut_in).'...' : $this->content ;
     }
+
+
 }

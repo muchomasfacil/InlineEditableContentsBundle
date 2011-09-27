@@ -311,11 +311,12 @@ class ContentController extends Controller
     {
         $em = $this->get('doctrine')->getEntityManager();
         $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+
         $ckeditor_options = $this->container->getParameter('mucho_mas_facil_inline_editable_contents.ckeditor_options');
-        //die(print_r($ckeditor_options));
         $ckeditor_config = $ckeditor_options['default'];
         if ($content) {
             $content_params = $content->getParsedParams();
+            //die(print_r($content_params));
             if ((isset($content_params['ckeditor_load_option'])) && (isset($ckeditor_options[$content_params['ckeditor_load_option']]))){
                 $ckeditor_config = $ckeditor_options[$content_params['ckeditor_load_option']];
             }
@@ -330,8 +331,8 @@ class ContentController extends Controller
             //config.filebrowserUploadUrl = '';
             //config.filebrowserImageUploadUrl = '';
             //config.filebrowserFlashUploadUrl = '';
-            //config.filebrowserWindowWidth = '700px';
-            //config.filebrowserWindowHeight = '480px';
+            config.filebrowserWindowWidth = '700';
+            config.filebrowserWindowHeight = '480';
             ";
         }
         if (isset($content_params['ckeditor_custom_options'])){

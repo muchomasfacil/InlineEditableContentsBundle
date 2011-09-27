@@ -16,42 +16,44 @@ class DemoController extends Controller
 
         $em = $this->get('doctrine')->getEntityManager();
         //$this->container, pasarlo a findOrCreateIfNotExist
-        $contents['page-h1'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('page-h1', 'PlainText', 1,
-                array(
-                    //'yml_params' => array(
-                            // TODO testar esta funcionalidad
-                            //'form_template' => 'CustomBundle:customaController:custom.html.twig'
-                            //'dialog_title' => TODO
-                        //)
-                    //'yml_editor_roles' =>
-                    //'yml_admin_roles' =>
-                    //'entity_class' => "MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\Custom"
-                    //'form_class' => "MuchoMasFacil\InlineEditableContentsBundle\Form\Content\CustomType"
-                    //'render_template' => 'CustomBundle:customaController:custom.html.twig'
-                    //'content' => array('hola', 'radiola') ó 'loquesea'
-                    )
-                );//findOrCreateIfNotExist
-        $contents['page-html'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('page-html', 'RichText', null);
 
-        $contents['img-img'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('img-img', 'PlainText', 1,
-            array(
-              'form_class' => "MuchoMasFacil\InlineEditableContentsBundle\Form\Content\FileType"
-            )
-        );
-        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('another-html');
+        $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->setWidgetsDefaultParams($this->container->getParameter('mucho_mas_facil_inline_editable_contents.widgets'));
+
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('plain-text-example');
         if ($content) {
             $em->remove($content);
             $em->flush();
         }
-        $contents['another-html'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('another-html', 'RichText', 1, array(
+        $contents['plain-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('plain-text-example');//findOrCreateIfNotExist
+
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('multi-line-plain-text-example');
+        if ($content) {
+            $em->remove($content);
+            $em->flush();
+        }
+        $contents['multi-line-plain-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('multi-line-plain-text-example', 'multi_line_plain_text');
+
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('rich-text-collection-example');
+        if ($content) {
+            $em->remove($content);
+            $em->flush();
+        }
+        $contents['rich-text-collection-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('rich-text-collection-example', 'rich_text', null);
+
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('custom-rich-text-example');
+        if ($content) {
+            $em->remove($content);
+            $em->flush();
+        }
+        $custom_params = array();
+                         /*array(
             'yml_params' => '
 ckeditor_load_option: custom
 ckeditor_custom_options: |
     //esto es la prueba
     '
-        )
-    );
-
+        );*/
+        $contents['custom-rich-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('custom-rich-text-example', 'custom_rich_text', 1, $custom_params);
 
         return $this->render('MuchoMasFacilInlineEditableContentsBundle:Demo:index.html.twig', array('contents' => $contents));
     }

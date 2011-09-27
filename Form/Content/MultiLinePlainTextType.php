@@ -7,16 +7,16 @@ use
     ,Symfony\Component\Form\FormBuilder
     ;
 
-class PlainTextType extends AbstractType
+class MultiLinePlainTextType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('content', 'text');
+            ->add('content', 'textarea');
     }
 
     public function getName()
     {
-        return 'plain_text';
+        return 'multi_line_plain_text';
     }
 }
