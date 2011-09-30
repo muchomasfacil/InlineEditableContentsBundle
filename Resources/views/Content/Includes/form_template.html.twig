@@ -1,6 +1,6 @@
     <replaceContent select="#{{ js_dialog_var }}"><![CDATA[
 
-{% include bundle_name ~ ':' ~ controller_name ~ ':Includes/flash.html.twig' %}
+{% include 'MuchoMasFacilInlineEditableContentsBundle:Content:Includes/flash.html.twig' %}
 
 <form id="{{ form_id }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
@@ -34,4 +34,3 @@ $('#{{form_id}} text[data-mmf-fm]').each(function(){
 
     ]]>
     </eval>
-

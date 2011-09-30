@@ -146,7 +146,7 @@ class ContentController extends Controller
             else{
                 $class_name = $content->getEntityClass();
                 $new_entry = new $class_name();
-                $content_to_insert = $new_entry->getLoremIpsum();
+                $content_to_insert = $new_entry->getLoremIpsum(1);
                 if (isset($content_content[$content_order])){
                     $content_to_insert[] = $content_content[$content_order];
                     array_splice($content_content, $content_order, 1, $content_to_insert);
@@ -361,3 +361,4 @@ class ContentController extends Controller
     }
 
 }
+
