@@ -331,8 +331,8 @@ class ContentController extends Controller
             //config.filebrowserUploadUrl = '';
             //config.filebrowserImageUploadUrl = '';
             //config.filebrowserFlashUploadUrl = '';
-            config.filebrowserWindowWidth = '700';
-            config.filebrowserWindowHeight = '480';
+            //config.filebrowserWindowWidth = '700';
+            //config.filebrowserWindowHeight = '480';
             ";
         }
         if (isset($content_params['ckeditor_custom_options'])){
