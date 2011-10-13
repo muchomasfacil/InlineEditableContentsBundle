@@ -38,12 +38,16 @@ parameters:
             form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\RichTextHeaderAndCustomRichTextType
             render_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Render/RichTextHeaderAndCustomRichText.html.twig'
 
+        image:  #image_url, posible title or text, posible link
+            entity_class: MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\Image
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\ImageType
+            render_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Render/Image.html.twig'
+
         raw: #use with care may end with js malscripting
             entity_class: MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\MultilinePlainText
             form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\MultilinePlainTextType
             render_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Render/RichText.html.twig'
 
-        #image: ~ #image_url, posible title or text, posible link
 
         #advanced_image: ~ #this are just calls to FileManagerBundle
 

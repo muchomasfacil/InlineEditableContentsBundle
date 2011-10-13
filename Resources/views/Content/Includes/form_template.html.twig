@@ -23,14 +23,33 @@
 $('#{{form_id}} textarea[data-mmf-iec-ckeditor]').each(function(){
     //alert($(this).attr('data-mmf-iec-ckeditor'))
     delete CKEDITOR.instances[$(this).attr('id')];
-    })
-    .ckeditor(function() {}, { customConfig : '{{ path( 'mmf_iec_ckeditor_config', {'handler': content.handler}) }}/' + $(this).attr('id') });
+    $(this).ckeditor(function() {}, { customConfig : '{{ path( 'mmf_iec_ckeditor_config', {'handler': content.handler}) }}/' + $(this).attr('id') });
+    });
 
 //file manager fields
 // TODO
-$('#{{form_id}} text[data-mmf-fm]').each(function(){
-    alert($(this).attr('data-mmf-fm'))
+
+$('#{{form_id}} input[data-mmf-fm]').each(function(){
+    $(this).after('<span>{{ 'Double click on input to enter file manager' | trans({}, (bundle_name | lower)) }}</span>');
+    $(this).dblclick(function () {
+
+        var windowHeight = window.screen.height *70/100;
+        var windowWidth = window.screen.width *80/100;
+        var windowName = '{{ 'File manager' | trans({}, (bundle_name | lower)) }}'
+        var windowUri = '{{ path( 'mmf_iec_file_manager', {'handler': content.handler}) }}/' + $(this).attr('id');
+        var centerWidth = (window.screen.width - windowWidth) / 2;
+        var centerHeight = (window.screen.height - windowHeight) / 2;
+
+        newWindow = window.open(windowUri, windowName, 'resizable=0,width=' + windowWidth +
+            ',height=' + windowHeight +
+            ',left=' + centerWidth +
+            ',top=' + centerHeight);
+
+        newWindow.focus();
+
+        });
     });
 
     ]]>
     </eval>
+

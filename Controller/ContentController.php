@@ -342,6 +342,34 @@ class ContentController extends Controller
         return $this->render($this->getTemplateNameByDefaults(__FUNCTION__, 'js'), $this->render_vars);
     }
 
+    public function fileManagerAction($handler, $input_id)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $content = $em->getRepository($this->render_vars['bundle_name'] . ':Content')->find($handler);
+
+        if ($content) {
+            $content_params = $content->getParsedParams();
+        }
+
+        $url_safe_encoder = new \MuchoMasFacil\FileManagerBundle\Util\CustomUrlSafeEncoder();
+
+        $file_manager_params = array(
+            'upload_path_after_document_root' => '/uploads/'.$content->getHandler().'/files/'
+            ,'on_select_callback_function' => //will receive three params: file_name, upload_path_after_root_dir, input_container
+                "
+                    window.opener.$('#".$input_id."').val(upload_path_after_document_root + file_name);
+                    window.close();
+                "
+            );
+        if (isset($content_params['mmf_fm_load_options'])) {
+            $file_manager_params['load_options'] = $content_params['mmf_fm_load_options'];
+        }
+        $route = $this->get('router')->generate('mmf_fm_with_layout', array('url_safe_encoded_params' => $url_safe_encoder->encode($file_manager_params)));
+        return $this->redirect($route);
+
+    }
+
+
     public function cacheClearAction()
     {
         $realCacheDir = $this->get('kernel')->getCacheDir();
@@ -361,4 +389,3 @@ class ContentController extends Controller
     }
 
 }
-

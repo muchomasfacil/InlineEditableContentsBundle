@@ -45,15 +45,23 @@ class DemoController extends Controller
             $em->remove($content);
             $em->flush();
         }
+
         $custom_params = array();
-                         /*array(
-            'yml_params' => '
-ckeditor_load_option: custom
-ckeditor_custom_options: |
-    //esto es la prueba
-    '
-        );*/
         $contents['custom-rich-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('custom-rich-text-example', 'custom_rich_text', 1, $custom_params);
+
+       $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('image-example');
+        if ($content) {
+            $em->remove($content);
+            $em->flush();
+        }
+
+        $custom_params = array(
+            'yml_params' => '
+mmf_fm_load_options: collection_10_pdf
+    '
+        );
+
+        $contents['image-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('image-example', 'image', 10, $custom_params);
 
         return $this->render('MuchoMasFacilInlineEditableContentsBundle:Demo:index.html.twig', array('contents' => $contents));
     }
