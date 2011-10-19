@@ -38,10 +38,19 @@ parameters:
             form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\RichTextHeaderAndCustomRichTextType
             render_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Render/RichTextHeaderAndCustomRichText.html.twig'
 
+        advanced_image:  #image_url, posible title or text, posible link
+            entity_class: MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\AdvancedImage
+            form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\AdvancedImageType
+            render_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Render/AdvancedImage.html.twig'
+            yml_params: |
+                mmf_fm_load_options: single_image
+
         image:  #image_url, posible title or text, posible link
             entity_class: MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\Image
             form_class: MuchoMasFacil\InlineEditableContentsBundle\Form\Content\ImageType
             render_template: 'MuchoMasFacilInlineEditableContentsBundle:Content:Render/Image.html.twig'
+            yml_params: |
+                mmf_fm_load_options: collection_image
 
         raw: #use with care may end with js malscripting
             entity_class: MuchoMasFacil\InlineEditableContentsBundle\Entity\Content\MultilinePlainText

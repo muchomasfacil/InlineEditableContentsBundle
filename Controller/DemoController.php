@@ -26,12 +26,14 @@ class DemoController extends Controller
         }
         $contents['plain-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('plain-text-example');//findOrCreateIfNotExist
 
+
         $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('multi-line-plain-text-example');
         if ($content) {
             $em->remove($content);
             $em->flush();
         }
         $contents['multi-line-plain-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('multi-line-plain-text-example', 'multi_line_plain_text');
+
 
         $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('rich-text-collection-example');
         if ($content) {
@@ -40,28 +42,30 @@ class DemoController extends Controller
         }
         $contents['rich-text-collection-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('rich-text-collection-example', 'rich_text', null);
 
+
         $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->find('custom-rich-text-example');
         if ($content) {
             $em->remove($content);
             $em->flush();
         }
-
         $custom_params = array();
         $contents['custom-rich-text-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('custom-rich-text-example', 'custom_rich_text', 1, $custom_params);
 
-       $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('image-example');
+
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('image-example');
         if ($content) {
             $em->remove($content);
             $em->flush();
         }
+        $contents['image-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('image-example', 'image');
 
-        $custom_params = array(
-            'yml_params' => '
-mmf_fm_load_options: collection_10_pdf
-    '
-        );
 
-        $contents['image-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('image-example', 'image', 10, $custom_params);
+        $content = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('advanced-image-example');
+        if ($content) {
+            $em->remove($content);
+            $em->flush();
+        }
+        $contents['advanced-image-example'] = $em->getRepository('MuchoMasFacilInlineEditableContentsBundle:Content')->findOrCreateIfNotExist('advanced-image-example', 'advanced_image', 10);
 
         return $this->render('MuchoMasFacilInlineEditableContentsBundle:Demo:index.html.twig', array('contents' => $contents));
     }

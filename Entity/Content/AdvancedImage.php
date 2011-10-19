@@ -4,20 +4,45 @@ namespace MuchoMasFacil\InlineEditableContentsBundle\Entity\Content;
 
 use MuchoMasFacil\InlineEditableContentsBundle\Util\LoremIpsumGenerator;
 
-class Image
+class AdvancedImage
 {
 
-    private $file_list;
+    private $url;
 
-    public function setFileList($file_list)
+    private $label;
+
+    private $link;
+
+    public function setUrl($url)
     {
-        $this->file_list = $file_list;
+        $this->url = $url;
     }
 
-    public function getFileList()
+    public function getUrl()
     {
-        return $this->file_list;
+        return $this->url;
     }
+
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
 
     public function getLoremIpsum($count = 1, $number_of_words_to_lorem_ipssum = null)
     {
@@ -32,7 +57,9 @@ class Image
         for ($i = 0; $i < $count; $i++)
         {
             $entry = new self;
-            $entry->setFileList('http://www.muchomasfacil.com/images/logo.png, http://www.muchomasfacil.com/images/logo.png');
+            $entry->setUrl('http://www.muchomasfacil.com/images/logo.png');
+            $entry->setLabel(trim($lorem_ipsum->getContent($number_of_words_to_lorem_ipssum, 'txt', false)));
+            $entry->setLink('http://www.muchomasfacil.com');
             $return[] = $entry;
         }
         return $return;
@@ -40,9 +67,6 @@ class Image
 
     public function __toString()
     {
-        $cut_in = 60;
-        $content = strip_tags($this->getFileList());
-        return (strlen($content) > $cut_in) ? substr($content, 0, $cut_in).'...' : $content ;
-
+        return $this->getLabel() ;
     }
 }

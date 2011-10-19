@@ -1,6 +1,20 @@
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Better ContentEntity design:
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+handler
+content
+yml_params
+    editor_roles
+    admin_roles
+    render_roles
+    entity_class
+        form
+        form_class: {type: string, length: 255}
+        render_template: {type: string, length: 255}
+        form_template: {type: string, length: 255}
+        collection_length: {type: integer, nullable: true}
+        content: {type: array, nullable: true}
+
 
 Global
 - content

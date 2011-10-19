@@ -7,19 +7,21 @@ use
     ,Symfony\Component\Form\FormBuilder
     ;
 
-class ImageType extends AbstractType
+class AdvancedImageType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('file_list', 'text', array(
+            ->add('url', 'text', array(
               'attr' => array('data-mmf-fm'=> 'true')
             ))
+            ->add('label', 'text')
+            ->add('link', 'text')
         ;
     }
 
     public function getName()
     {
-        return 'image';
+        return 'advanced_image';
     }
 }

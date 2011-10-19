@@ -15,6 +15,8 @@ class ContentController extends Controller
 
     function __construct()
     {
+        $this->document_root = $_SERVER['DOCUMENT_ROOT'];
+        //$this->url_safe_encoder =  new CustomUrlSafeEncoder();
         $this->render_vars['bundle_name'] = 'MuchoMasFacilInlineEditableContentsBundle';
         $this->render_vars['controller_name'] = str_replace('Controller', '', str_replace(__NAMESPACE__.'\\', '', __CLASS__));
     }
@@ -65,7 +67,25 @@ class ContentController extends Controller
         $content = $this->getContentByHandler($handler);
 
         $this->render_vars['content'] = $content;
+
         return $this->render($content->getRenderTemplate(), $this->render_vars);
+    }
+
+    public function renderPathAction($path, $template)
+    {
+        $in = $this->document_root . $path;
+
+        $finder = new Finder();
+        $finder->files()->depth('==0');
+        if (is_dir($in)) {
+            $this->render_vars['files'] = $finder->in($in);
+            $this->render_vars['count_files'] = iterator_count($this->render_vars['files']);
+        }
+        else {
+            $this->render_vars['count_files'] = 0;
+        }
+        die($files);
+        return $this->render($template, $this->render_vars);
     }
 
     public function renderWithContainerAction($handler, $container_html_tag = 'div', $container_html_attributes = '')
@@ -357,7 +377,7 @@ class ContentController extends Controller
             'upload_path_after_document_root' => '/uploads/'.$content->getHandler().'/files/'
             ,'on_select_callback_function' => //will receive three params: file_name, upload_path_after_root_dir, input_container
                 "
-                    window.opener.$('#".$input_id."').val(upload_path_after_document_root + file_name);
+                    window.opener.$('#".$input_id."').val(input_value);
                     window.close();
                 "
             );

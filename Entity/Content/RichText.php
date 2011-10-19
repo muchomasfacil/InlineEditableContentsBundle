@@ -41,7 +41,7 @@ class RichText
     public function __toString()
     {
         $cut_in = 60;
-        $content = strip_tags($this->content);
+        $content = strip_tags($this->getContent());
         return (strlen($content) > $cut_in) ? substr($content, 0, $cut_in).'...' : $content ;
     }
 }
